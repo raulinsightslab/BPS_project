@@ -1,12 +1,13 @@
+import 'package:bps_e_learning/views/pembinaan_sektoral/widget/pembinaan_botnav.dart';
+import 'package:flutter/material.dart';
 import 'package:bps_e_learning/core/widgets/custom_button.dart';
 import 'package:bps_e_learning/core/widgets/logo_widget.dart';
 import 'package:bps_e_learning/core/widgets/page_indicator.dart';
 import 'package:bps_e_learning/core/widgets/program_card.dart';
 import 'package:bps_e_learning/views/desa_cantik/widget/botnav_descan.dart';
-import 'package:bps_e_learning/views/introduction/screens/password_screen.dart';
-import 'package:bps_e_learning/views/pojok_statistik/auth/login_screen.dart';
 import 'package:bps_e_learning/views/pojok_statistik/widget/pojok_botnav.dart';
-import 'package:flutter/material.dart';
+
+// ⬆ Pastikan nama file & class benar
 
 class ProgramSelectionPage extends StatefulWidget {
   @override
@@ -43,19 +44,33 @@ class _ProgramSelectionPageState extends State<ProgramSelectionPage> {
     });
   }
 
+  /// ROUTING BARU (yang kamu minta)
   void _onContinuePressed() {
     if (_selectedProgramIndex == null) return;
 
     final selectedProgram = _programs[_selectedProgramIndex!];
 
-    if (selectedProgram.requiresPassword) {
-      Navigator.of(
-        context,
-      ).push(MaterialPageRoute(builder: (context) => BotnavDescan()));
-    } else {
-      Navigator.of(
-        context,
-      ).push(MaterialPageRoute(builder: (context) => PojokMainScreen()));
+    switch (selectedProgram.title) {
+      case 'Pojok Statistik':
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => PojokMainScreen()),
+        );
+        break;
+
+      case 'Desa Cantik':
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => BotnavDescan()),
+        );
+        break;
+
+      case 'Pembinaan Sektoral':
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => PembinaanBotnav()),
+        );
+        break;
     }
   }
 
@@ -76,11 +91,9 @@ class _ProgramSelectionPageState extends State<ProgramSelectionPage> {
             children: [
               SizedBox(height: 60),
 
-              // BPS Logo
               BPSLogoWidget(),
               SizedBox(height: 40),
 
-              // Headline
               Text(
                 'Pilih Program Pembelajaran Anda',
                 style: Theme.of(context).textTheme.headlineMedium,
@@ -88,7 +101,6 @@ class _ProgramSelectionPageState extends State<ProgramSelectionPage> {
               ),
               SizedBox(height: 24),
 
-              // Program Cards
               Expanded(
                 child: ListView.builder(
                   itemCount: _programs.length,
@@ -106,7 +118,6 @@ class _ProgramSelectionPageState extends State<ProgramSelectionPage> {
               ),
               SizedBox(height: 24),
 
-              // Select Program Button
               OnboardingButton(
                 text: 'Pilih Program Ini',
                 onPressed: _selectedProgramIndex != null
@@ -115,7 +126,6 @@ class _ProgramSelectionPageState extends State<ProgramSelectionPage> {
               ),
               SizedBox(height: 16),
 
-              // Page Indicator
               PageIndicator(
                 currentPage: 3,
                 totalPages: 3,

@@ -1,4 +1,4 @@
-import 'package:bps_e_learning/model/modul.dart';
+import 'package:bps_e_learning/model/modul_model.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -47,14 +47,11 @@ class _VideoPageState extends State<VideoPage> {
             ),
             backgroundColor: const Color(0xFF005BBB),
           ),
-
           body: ListView(
             padding: const EdgeInsets.all(20),
             children: [
               ClipRRect(borderRadius: BorderRadius.circular(16), child: player),
-
-              const SizedBox(height: 20),
-
+              SizedBox(height: 20),
               Text(
                 widget.lesson.description,
                 style: TextStyle(
@@ -63,15 +60,13 @@ class _VideoPageState extends State<VideoPage> {
                   height: 1.45,
                 ),
               ),
-
-              const SizedBox(height: 30),
-
+              SizedBox(height: 30),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
                   onPressed: () {},
-                  icon: const Icon(Icons.download_rounded),
-                  label: const Text("Download Modul PDF"),
+                  icon: Icon(Icons.download_rounded),
+                  label: Text("Download Modul PDF"),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFF8A00),
                     foregroundColor: Colors.white,

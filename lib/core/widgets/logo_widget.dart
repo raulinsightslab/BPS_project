@@ -5,10 +5,9 @@ class BPSLogoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 80,
-      height: 80,
+      height: 160,
       decoration: BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.circle,
+        color: Colors.white.withOpacity(0.4),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -16,16 +15,9 @@ class BPSLogoWidget extends StatelessWidget {
             offset: Offset(0, 2),
           ),
         ],
-      ),
-      child: Center(
-        child: Text(
-          'BPS',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFFFFA726),
-            fontFamily: 'Poppins',
-          ),
+        image: DecorationImage(
+          image: AssetImage('assets/images/logo_2.png'),
+          fit: BoxFit.cover, // menjaga proporsi gambar
         ),
       ),
     );

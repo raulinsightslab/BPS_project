@@ -16,5 +16,6 @@ class LessonModel {
     required this.videoId,
     required this.description,
     required this.pdfUrl,
+    x,
   });
 }

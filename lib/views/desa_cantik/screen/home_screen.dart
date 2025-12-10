@@ -6,7 +6,7 @@ class DesaHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFF3E0),
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -23,11 +23,10 @@ class DesaHomePage extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                "Selamat datang di program Desa Cantik StaT-Gem.",
+                "Selamat datang di program Desa Cantik (Desa Cinta Statistik)",
                 style: TextStyle(fontSize: 15, color: Colors.orange.shade700),
               ),
               const SizedBox(height: 20),
-
               // Card info
               Container(
                 padding: const EdgeInsets.all(18),

@@ -1,8 +1,6 @@
-// pojok_main_screen.dart
 import 'package:bps_e_learning/views/pojok_statistik/home/pojok_dashboard.dart';
 import 'package:bps_e_learning/views/pojok_statistik/home/pojok_modul_screen.dart';
 import 'package:bps_e_learning/views/pojok_statistik/home/pojok_profile_screen.dart';
-import 'package:crystal_navigation_bar/crystal_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 class PojokMainScreen extends StatefulWidget {
@@ -17,62 +15,45 @@ class _PojokMainScreenState extends State<PojokMainScreen> {
 
   final List<Widget> _screens = [
     const DashboardScreen(),
-    const ModulScreen(),
-    const ProfileScreen(),
+    const TugasScreen(),
+    const SettingsPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _screens[_currentIndex],
-      bottomNavigationBar: CrystalNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        borderRadius: 25,
-        backgroundColor: Colors.orange,
-        indicatorColor: Colors.orange,
-        unselectedItemColor: Colors.grey.shade400,
-        selectedItemColor: Colors.orange,
         onTap: (index) {
           setState(() {
             _currentIndex = index;
           });
         },
-        items: [
-          CrystalNavigationBarItem(
-            icon: Icons.dashboard_outlined,
-            selectedColor: Colors.white,
-            // title: Text(
-            //   'Dashboard',
-            //   style: TextStyle(
-            //     color: _currentIndex == 0 ? Colors.orange : Colors.grey.shade400,
-            //     fontSize: 12,
-            //     fontWeight: _currentIndex == 0 ? FontWeight.w600 : FontWeight.normal,
-            //   ),
-            // ),
+
+        // ====== STYLE SESUAI DESAIN ======
+        backgroundColor: Colors.white,
+        elevation: 8,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: const Color(0xFF1565C0), // Biru desain kamu
+        unselectedItemColor: Colors.grey.shade500,
+        selectedFontSize: 12,
+        unselectedFontSize: 12,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.dashboard_outlined),
+            label: "Modul",
           ),
-          CrystalNavigationBarItem(
-            icon: Icons.library_books_outlined,
-            selectedColor: Colors.white,
-            // : Text(
-            //   'Modul',
-            //   style: TextStyle(
-            //     color: _currentIndex == 1 ? Colors.orange : Colors.grey.shade400,
-            //     fontSize: 12,
-            //     fontWeight: _currentIndex == 1 ? FontWeight.w600 : FontWeight.normal,
-            //   ),
-            // ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.assignment_outlined),
+            label: "Tugas",
           ),
-          CrystalNavigationBarItem(
-            icon: Icons.person_outlined,
-            selectedColor: Colors.white,
-            // title: Text(
-            //   'Profile',
-            //   style: TextStyle(
-            //     color: _currentIndex == 2 ? Colors.orange : Colors.grey.shade400,
-            //     fontSize: 12,
-            //     fontWeight: _currentIndex == 2 ? FontWeight.w600 : FontWeight.normal,
-            //   ),
-            // ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings_outlined),
+            label: "Settings",
           ),
         ],
       ),

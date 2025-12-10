@@ -1,10 +1,10 @@
 import 'dart:ui';
-import 'package:bps_e_learning/views/desa_cantik/screen/home_screen.dart';
-import 'package:bps_e_learning/views/desa_cantik/screen/learning_page.dart';
-import 'package:bps_e_learning/views/desa_cantik/screen/modul_screen.dart';
-import 'package:bps_e_learning/views/desa_cantik/screen/settings_screen.dart';
-import 'package:bps_e_learning/views/desa_cantik/screen/tugas_screen.dart';
 import 'package:flutter/material.dart';
+
+// Screens kamu
+import 'package:bps_e_learning/views/desa_cantik/screen/learning_page.dart';
+import 'package:bps_e_learning/views/desa_cantik/screen/tugas_screen.dart';
+import 'package:bps_e_learning/views/desa_cantik/screen/settings_screen.dart';
 
 class BotnavDescan extends StatefulWidget {
   const BotnavDescan({super.key});
@@ -16,11 +16,11 @@ class BotnavDescan extends StatefulWidget {
 class _BotnavDescanState extends State<BotnavDescan> {
   int _currentIndex = 0;
 
+  /// 🔥 Screen list TANPA HOME dulu
   final List<Widget> _screens = [
-    const DesaHomePage(),
-    const LearningPage(),
-    const DesaTugasPage(),
-    const SettingsPage(),
+    const LearningPage(), // index 0
+    const DesaTugasPage(), // index 1
+    const SettingsPage(), // index 2
   ];
 
   @override
@@ -45,22 +45,18 @@ class _BotnavDescanState extends State<BotnavDescan> {
                   color: Colors.white.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(40),
 
-                  /// 🔥 OUTLINE TEBAL & JELAS
                   border: Border.all(
                     color: Colors.white.withOpacity(0.95),
                     width: 1.4,
                   ),
 
-                  /// 🔥 DOUBLE SHADOW (BIAR FLOATING BANGET)
                   boxShadow: [
-                    // Shadow bawah — soft glow
                     BoxShadow(
                       color: Colors.black.withOpacity(0.14),
                       blurRadius: 35,
                       spreadRadius: 3,
                       offset: const Offset(0, 18),
                     ),
-                    // Shadow atas — biar ada depth seperti botnav terangkat
                     BoxShadow(
                       color: Colors.black.withOpacity(0.06),
                       blurRadius: 12,
@@ -75,10 +71,9 @@ class _BotnavDescanState extends State<BotnavDescan> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      _navItem(Icons.home_rounded, "Home", 0),
-                      _navItem(Icons.menu_book_rounded, "Modul", 1),
-                      _navItem(Icons.assignment_rounded, "Tugas", 2),
-                      _navItem(Icons.settings_rounded, "Setting", 3),
+                      _navItem(Icons.menu_book_rounded, "Modul", 0),
+                      _navItem(Icons.assignment_rounded, "Tugas", 1),
+                      _navItem(Icons.settings_rounded, "Setting", 2),
                     ],
                   ),
                 ),
@@ -102,7 +97,6 @@ class _BotnavDescanState extends State<BotnavDescan> {
           color: active ? Colors.white.withOpacity(0.35) : Colors.transparent,
           borderRadius: BorderRadius.circular(30),
 
-          /// 🔥 HIGHLIGHT ACTIVE (lebih premium)
           border: active
               ? Border.all(
                   color: Colors.orange.shade600.withOpacity(0.5),
@@ -110,7 +104,6 @@ class _BotnavDescanState extends State<BotnavDescan> {
                 )
               : null,
 
-          /// Slight shadow for active item (biar timbul)
           boxShadow: active
               ? [
                   BoxShadow(
