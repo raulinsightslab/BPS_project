@@ -45,9 +45,7 @@ class DashboardScreen extends StatelessWidget {
               ],
             ),
           ),
-
           const SizedBox(height: 16),
-
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -63,9 +61,7 @@ class DashboardScreen extends StatelessWidget {
                       width: double.infinity,
                     ),
                   ),
-
                   const SizedBox(height: 20),
-
                   // 🔥 LIST VIDEO (REAL DATA)
                   buildVideoCard(
                     title:

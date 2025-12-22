@@ -65,7 +65,6 @@ class _ProgramCardState extends State<ProgramCard> {
                 ),
               ),
               SizedBox(width: 16),
-
               // Content
               Expanded(
                 child: Column(
@@ -92,7 +91,6 @@ class _ProgramCardState extends State<ProgramCard> {
                   ],
                 ),
               ),
-
               // Selection Indicator
               AnimatedContainer(
                 duration: Duration(milliseconds: 200),

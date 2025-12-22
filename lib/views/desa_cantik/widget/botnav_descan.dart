@@ -87,7 +87,6 @@ class _BotnavDescanState extends State<BotnavDescan> {
 
   Widget _navItem(IconData icon, String label, int index) {
     final bool active = _currentIndex == index;
-
     return GestureDetector(
       onTap: () => setState(() => _currentIndex = index),
       child: AnimatedContainer(

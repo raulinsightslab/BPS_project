@@ -1,3 +1,5 @@
+import 'video_item.dart';
+
 class ModuleModel {
   final String title;
   final List<LessonModel> lessons;
@@ -7,15 +9,14 @@ class ModuleModel {
 
 class LessonModel {
   final String title;
-  final String videoId;
   final String description;
   final String pdfUrl;
+  final List<VideoItem> videos;
 
   LessonModel({
     required this.title,
-    required this.videoId,
     required this.description,
     required this.pdfUrl,
-    x,
+    required this.videos,
   });
 }

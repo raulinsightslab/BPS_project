@@ -70,9 +70,7 @@ class _TugasScreenState extends State<TugasScreen> {
                 ),
               ),
             ),
-
             const SliverToBoxAdapter(child: SizedBox(height: 16)),
-
             // ================= TAB BAR =================
             SliverToBoxAdapter(
               child: Container(
@@ -91,9 +89,7 @@ class _TugasScreenState extends State<TugasScreen> {
                 ),
               ),
             ),
-
             const SliverToBoxAdapter(child: SizedBox(height: 16)),
-
             // ================= LIST TUGAS =================
             SliverList(
               delegate: SliverChildListDelegate([

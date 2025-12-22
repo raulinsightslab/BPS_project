@@ -1,6 +1,7 @@
-import 'package:bps_e_learning/model/modul_model.dart';
-import 'package:bps_e_learning/views/desa_cantik/screen/video_page.dart';
 import 'package:flutter/material.dart';
+import 'package:bps_e_learning/model/modul_model.dart';
+import 'package:bps_e_learning/model/video_item.dart';
+import 'package:bps_e_learning/views/desa_cantik/screen/video_page.dart';
 
 class LearningPage extends StatefulWidget {
   const LearningPage({super.key});
@@ -13,147 +14,148 @@ class _LearningPageState extends State<LearningPage> {
   int? _selectedModule;
 
   final List<ModuleModel> modules = [
+    // 1
     ModuleModel(
-      title: "Penjelasan Umum Desa Cantik",
+      title: "1. Penjelasan Umum Desa Cantik",
       lessons: [
         LessonModel(
           title: "Penjelasan Umum Desa Cantik",
-          videoId: "cihJ34cCzNU",
           description:
               "Penjelasan mengenai konsep program Desa Cantik dan tujuan utamanya.",
-          pdfUrl: "",
+          pdfUrl:
+              "https://drive.google.com/file/d/1DdKY8LN4TOE3zGIzlqVZQeRXhUeLmr2g/view",
+          videos: [
+            VideoItem(
+              title: "Penjelasan Umum Desa Cantik",
+              videoId: "cihJ34cCzNU",
+            ),
+          ],
         ),
       ],
     ),
+
+    // 2
     ModuleModel(
-      title: "Tata Kelola dan Skema Pembinaan",
+      title: "2. Penyelenggaraan Kegiatan Statistik",
       lessons: [
         LessonModel(
-          title: "Tata Kelola Desa Cantik",
-          videoId: "cihJ34cCzNU",
-          description:
-              "Struktur tata kelola dan mekanisme pembinaan dalam program Desa Cantik.",
-          pdfUrl: "",
+          title: "Penyelenggaraan Kegiatan Statistik",
+          description: "Materi penyelenggaraan kegiatan statistik.",
+          pdfUrl:
+              "https://drive.google.com/file/d/1sZR5Ab7oh9aqEDR7yFgChF6h6h1hSFO-/view",
+          videos: [
+            VideoItem(
+              title: "Materi Penyelenggaraan Kegiatan Statistik",
+              videoId: "",
+              comingSoon: true,
+            ),
+          ],
         ),
       ],
     ),
+
+    // 3
     ModuleModel(
-      title: "Metadata Statistik",
+      title: "3. Pengumpulan Data",
       lessons: [
         LessonModel(
-          title: "Metadata Statistik Desa",
-          videoId: "cihJ34cCzNU",
-          description:
-              "Penjelasan dasar tentang metadata statistik untuk desa.",
-          pdfUrl: "",
+          title: "Pengumpulan Data",
+          description: "Materi terkait proses pengumpulan data Desa Cantik.",
+          pdfUrl:
+              "https://drive.google.com/file/d/1Oawu2LF0jKahSZ2A00lzHVZ2giBJ_cwy/view",
+          videos: [
+            VideoItem(title: "Cara Pengumpulan Data", videoId: "5Easdr98usA"),
+            VideoItem(title: "Teknik Pengumpulan Data", videoId: "fPsu3H_ECrw"),
+            VideoItem(
+              title: "Penyusunan Instrumen Pengumpulan Data",
+              videoId: "Zb9zCQIxGQk",
+            ),
+            VideoItem(
+              title: "Pengumpulan Data pada Program Desa Cantik",
+              videoId: "jVNib4ISlo0",
+            ),
+          ],
         ),
       ],
     ),
+
+    // 4
     ModuleModel(
-      title: "Identifikasi Kebutuhan Desa",
+      title: "4. Pengolahan Data",
       lessons: [
         LessonModel(
-          title: "Cara Mengidentifikasi Kebutuhan Desa",
-          videoId: "cihJ34cCzNU",
-          description:
-              "Metode identifikasi kebutuhan desa untuk keperluan statistik dan pembangunan.",
-          pdfUrl: "",
+          title: "Pengolahan Data",
+          description: "Materi pengolahan data statistik desa.",
+          pdfUrl:
+              "https://drive.google.com/file/d/1e0xj4EZZRAwgBOeV00dgTKNKebAl6BwC/view",
+          videos: [
+            VideoItem(title: "Moda Pengumpulan Data", videoId: "O44h5hBIRnI"),
+            VideoItem(title: "Tahapan Pengolahan Data", videoId: "lwDgYzat0l4"),
+            VideoItem(title: "Validasi Data", videoId: "lLxMLUZexp4"),
+          ],
         ),
       ],
     ),
+
+    // 5
     ModuleModel(
-      title: "Pengumpulan Data",
+      title: "5. Analisis Data",
       lessons: [
         LessonModel(
-          title: "Teknik Pengumpulan Data",
-          videoId: "cihJ34cCzNU",
-          description:
-              "Metode dan tata cara pengumpulan data desa secara benar.",
-          pdfUrl: "",
+          title: "Analisis Data",
+          description: "Materi analisis data desa.",
+          pdfUrl:
+              "https://drive.google.com/file/d/1JMVEA9VbLGKfJonX27Ply-M0HcEwf667/view",
+          videos: [
+            VideoItem(title: "Tentang Analisis Data", videoId: "TeN_U4ardN4"),
+            VideoItem(
+              title: "Teknik Analisis Deskriptif",
+              videoId: "Fz-NcR9VgbA",
+            ),
+            VideoItem(
+              title: "Penyajian dan Visualisasi Data",
+              videoId: "qF3cji6RUWM",
+            ),
+          ],
         ),
       ],
     ),
+
+    // 6
     ModuleModel(
-      title: "Pengolahan Data",
+      title: "6. Penyajian Data",
       lessons: [
         LessonModel(
-          title: "Pengolahan Data Desa",
-          videoId: "cihJ34cCzNU",
-          description:
-              "Proses pengolahan data desa menggunakan teknik statistik dasar.",
-          pdfUrl: "",
+          title: "Penyajian Data",
+          description: "Materi penyajian data statistik desa.",
+          pdfUrl:
+              "https://drive.google.com/file/d/1_R4weDyri1xC--vwwfvntC6yOJj0pnl0/view",
+          videos: [
+            VideoItem(title: "Penyajian Tabel", videoId: "gRAdwI11K6U"),
+            VideoItem(title: "Penyajian Grafik", videoId: "Kl355bUGWV0"),
+            VideoItem(title: "Penyajian Infografis", videoId: "n4Mx6nS2w84"),
+            VideoItem(title: "Penyebarluasan Data", videoId: "Q6hWgYMRlSY"),
+          ],
         ),
       ],
     ),
+
+    // 7
     ModuleModel(
-      title: "Analisis Deskriptif",
+      title: "7. Manajemen Kualitas Data",
       lessons: [
         LessonModel(
-          title: "Analisis Deskriptif Data Desa",
-          videoId: "cihJ34cCzNU",
-          description:
-              "Cara melakukan analisis deskriptif untuk hasil data desa.",
-          pdfUrl: "",
-        ),
-      ],
-    ),
-    ModuleModel(
-      title: "Tata Kelola Data dalam Sistem Informasi",
-      lessons: [
-        LessonModel(
-          title: "Data Management pada Sistem Informasi Desa",
-          videoId: "cihJ34cCzNU",
-          description:
-              "Pengelolaan data desa dalam sistem informasi berbasis digital.",
-          pdfUrl: "",
-        ),
-      ],
-    ),
-    ModuleModel(
-      title: "Penyajian Data",
-      lessons: [
-        LessonModel(
-          title: "Penyajian Data Desa",
-          videoId: "cihJ34cCzNU",
-          description:
-              "Cara menyajikan data desa secara menarik dan mudah dipahami.",
-          pdfUrl: "",
-        ),
-      ],
-    ),
-    ModuleModel(
-      title: "Manajemen Kualitas Data",
-      lessons: [
-        LessonModel(
-          title: "Data Quality Management Desa",
-          videoId: "cihJ34cCzNU",
-          description:
-              "Teknik menjaga kualitas data desa agar tetap valid dan terpercaya.",
-          pdfUrl: "",
-        ),
-      ],
-    ),
-    ModuleModel(
-      title: "Monitoring dan Evaluasi (Monev)",
-      lessons: [
-        LessonModel(
-          title: "Monev Program Desa Cantik",
-          videoId: "cihJ34cCzNU",
-          description:
-              "Proses monitoring dan evaluasi pelaksanaan program Desa Cantik.",
-          pdfUrl: "",
-        ),
-      ],
-    ),
-    ModuleModel(
-      title: "Penilaian Desa Cantik",
-      lessons: [
-        LessonModel(
-          title: "Penilaian Desa Cantik",
-          videoId: "cihJ34cCzNU",
-          description:
-              "Cara penilaian dan indikator keberhasilan dalam program Desa Cantik.",
-          pdfUrl: "",
+          title: "Manajemen Kualitas Data",
+          description: "Materi manajemen kualitas data.",
+          pdfUrl:
+              "https://drive.google.com/file/d/1mNH_utsyxorDVQX6NjohgLXy-XqbyY9B/view",
+          videos: [
+            VideoItem(
+              title: "Manajemen Kualitas Data",
+              videoId: "",
+              comingSoon: true,
+            ),
+          ],
         ),
       ],
     ),
@@ -164,28 +166,38 @@ class _LearningPageState extends State<LearningPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        automaticallyImplyLeading: false, // Menghilangkan tombol back
-        title: Text(
+        automaticallyImplyLeading: false,
+        title: const Text(
           "Modul Pembelajaran",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
         ),
         backgroundColor: Colors.orange,
       ),
-      body: ListView(
-        padding: EdgeInsets.all(20),
-        children: [
-          Text(
-            "Daftar Modul Pembinaan Desa Cantik",
-            textAlign: TextAlign.left,
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w700,
-              color: Colors.black,
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // const Text(
+                  //   "Daftar Modul Pembinaan Desa Cantik",
+                  //   style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+                  // ),
+                  // const SizedBox(height: 20),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          ...List.generate(modules.length, (index) => _buildModuleCard(index)),
-        ],
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => _buildModuleCard(index),
+                childCount: modules.length,
+              ),
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 30)),
+          ],
+        ),
       ),
     );
   }
@@ -195,22 +207,14 @@ class _LearningPageState extends State<LearningPage> {
     final isOpen = _selectedModule == index;
 
     return AnimatedContainer(
-      duration: Duration(milliseconds: 250),
-      margin: EdgeInsets.only(bottom: 16),
+      duration: const Duration(milliseconds: 250),
+      margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
         borderRadius: BorderRadius.circular(18),
         border: Border.all(
           color: isOpen ? const Color(0xFFFF8A00) : Colors.black12,
           width: 1.8,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 16,
-            offset: const Offset(0, 6),
-          ),
-        ],
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(18),
@@ -224,18 +228,10 @@ class _LearningPageState extends State<LearningPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // HEADER
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: 22,
-                    backgroundColor: const Color(0xFF005BBB).withOpacity(0.1),
-                    child: const Icon(
-                      Icons.menu_book_rounded,
-                      color: Colors.orange,
-                    ),
-                  ),
-                  const SizedBox(width: 14),
+                  const Icon(Icons.menu_book_rounded, color: Colors.orange),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: Text(
                       module.title,
@@ -247,18 +243,22 @@ class _LearningPageState extends State<LearningPage> {
                   ),
                   Icon(
                     isOpen ? Icons.expand_less : Icons.expand_more,
-                    size: 26,
-                    color: const Color(0xFFFF8A00),
+                    color: Colors.orange,
                   ),
                 ],
               ),
-              // EXPANDED CONTENT
               if (isOpen) ...[
-                const SizedBox(height: 16),
-                Divider(color: Colors.orange),
                 const SizedBox(height: 14),
+                const Divider(),
                 ...module.lessons.map((lesson) {
-                  return InkWell(
+                  return ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(
+                      Icons.play_circle_fill_rounded,
+                      color: Color(0xFFFF8A00),
+                    ),
+                    title: Text(lesson.title),
+                    trailing: const Icon(Icons.chevron_right_rounded, size: 22),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -267,38 +267,8 @@ class _LearningPageState extends State<LearningPage> {
                         ),
                       );
                     },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 12,
-                        horizontal: 10,
-                      ),
-                      margin: const EdgeInsets.only(bottom: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.orange.shade50,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.play_circle_fill_rounded,
-                            color: Color(0xFFFF8A00),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              lesson.title,
-                              style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          Icon(Icons.chevron_right_rounded),
-                        ],
-                      ),
-                    ),
                   );
-                }).toList(),
+                }),
               ],
             ],
           ),

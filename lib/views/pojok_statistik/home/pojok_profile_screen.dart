@@ -7,47 +7,120 @@ class SettingsPage extends StatelessWidget {
   // MENU ITEM BUILDER
   // ==========================
   Widget buildMenuItem({
+    required BuildContext context,
     required Color bgColor,
     required IconData icon,
     required String title,
-    Color? iconColor,
+    required VoidCallback onTap,
     bool isDanger = false,
   }) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      decoration: BoxDecoration(
-        color: isDanger ? Colors.red.shade50 : Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          color: isDanger ? Colors.red.shade50 : Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(color: bgColor, shape: BoxShape.circle),
+              child: Icon(icon, color: Colors.white),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: isDanger ? FontWeight.w600 : FontWeight.w500,
+                  color: isDanger ? Colors.red.shade700 : Colors.black87,
+                ),
+              ),
+            ),
+            Icon(
+              Icons.chevron_right,
+              color: isDanger ? Colors.red.shade700 : Colors.grey,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ==========================
+  // DIALOG TENTANG PROGRAM
+  // ==========================
+  void showAboutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text(
+          "Tentang Program",
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
+        content: const Text(
+          "Pojok Statistik Kabupaten Tangerang merupakan program kolaborasi "
+          "antara Badan Pusat Statistik (BPS) dan pemerintah daerah untuk "
+          "meningkatkan literasi statistik masyarakat.\n\n"
+          "Program ini menyediakan akses data, edukasi statistik, serta "
+          "pendampingan dalam pemanfaatan data sebagai dasar perencanaan "
+          "dan pengambilan keputusan.",
+          textAlign: TextAlign.justify,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Tutup"),
           ),
         ],
       ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(color: bgColor, shape: BoxShape.circle),
-            child: Icon(icon, color: iconColor ?? Colors.white),
+    );
+  }
+
+  // ==========================
+  // DIALOG KELUAR PROGRAM
+  // ==========================
+  void showExitDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text(
+          "Keluar Program",
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
+        content: const Text(
+          "Apakah Anda yakin ingin keluar dari halaman pengaturan?",
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text("Batal"),
           ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Text(
-              title,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: isDanger ? FontWeight.w600 : FontWeight.w500,
-                color: isDanger ? Colors.red.shade700 : Colors.black87,
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
-          ),
-          Icon(
-            Icons.chevron_right,
-            color: isDanger ? Colors.red.shade700 : Colors.grey,
+            onPressed: () {
+              Navigator.pop(dialogContext); // tutup dialog
+              Navigator.pop(context); // kembali ke halaman sebelumnya
+            },
+            child: const Text("Keluar"),
           ),
         ],
       ),
@@ -66,7 +139,7 @@ class SettingsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ======================
-            // HEADER POJOK STATISTIK
+            // HEADER
             // ======================
             Container(
               width: double.infinity,
@@ -118,7 +191,7 @@ class SettingsPage extends StatelessWidget {
             const SizedBox(height: 20),
 
             // ======================
-            // SCROLL CONTENT
+            // CONTENT
             // ======================
             Expanded(
               child: SingleChildScrollView(
@@ -126,40 +199,26 @@ class SettingsPage extends StatelessWidget {
                 child: Column(
                   children: [
                     buildMenuItem(
-                      bgColor: Colors.blue.shade400,
-                      icon: Icons.person_outline,
-                      title: "Profil Pengguna",
-                    ),
-                    buildMenuItem(
-                      bgColor: Colors.green.shade400,
-                      icon: Icons.notifications_none,
-                      title: "Notifikasi",
-                    ),
-                    buildMenuItem(
-                      bgColor: Colors.purple.shade400,
-                      icon: Icons.color_lens_outlined,
-                      title: "Tema Aplikasi",
-                    ),
-                    buildMenuItem(
-                      bgColor: Colors.orange.shade400,
-                      icon: Icons.privacy_tip_outlined,
-                      title: "Privasi & Keamanan",
-                    ),
-                    buildMenuItem(
+                      context: context,
                       bgColor: Colors.blueGrey.shade400,
                       icon: Icons.info_outline,
-                      title: "Tentang Aplikasi",
+                      title: "Tentang Program",
+                      onTap: () => showAboutDialog(context),
                     ),
                     buildMenuItem(
+                      context: context,
                       bgColor: Colors.red.shade300,
-                      icon: Icons.logout,
-                      title: "Keluar Akun",
+                      icon: Icons.exit_to_app,
+                      title: "Keluar Program",
                       isDanger: true,
+                      onTap: () => showExitDialog(context),
                     ),
 
                     const SizedBox(height: 40),
 
+                    // ======================
                     // FOOTER
+                    // ======================
                     Column(
                       children: [
                         Text(
@@ -173,7 +232,6 @@ class SettingsPage extends StatelessWidget {
                         ),
                       ],
                     ),
-
                     const SizedBox(height: 20),
                   ],
                 ),

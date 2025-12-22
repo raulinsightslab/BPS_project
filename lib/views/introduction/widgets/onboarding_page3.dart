@@ -22,11 +22,9 @@ class OnboardingPage3 extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: 60),
-
               // BPS Logo
               BPSLogoWidget(),
               SizedBox(height: 40),
-
               // Illustration with Glass Effect
               Expanded(
                 child: GlassIllustrationBox(
@@ -34,7 +32,6 @@ class OnboardingPage3 extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 40),
-
               // Headline
               Text(
                 'Pilih Program Pembelajaran Anda',
@@ -42,7 +39,6 @@ class OnboardingPage3 extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 16),
-
               // Subheadline
               Text(
                 'Pilih program yang sesuai dengan kebutuhan pembelajaran Anda',
@@ -50,7 +46,6 @@ class OnboardingPage3 extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 40),
-
               // Continue to Program Selection
               OnboardingButton(
                 text: 'Pilih Program',

@@ -5,20 +5,17 @@ import 'package:flutter/material.dart';
 
 class PembinaanBotnav extends StatefulWidget {
   const PembinaanBotnav({super.key});
-
   @override
   State<PembinaanBotnav> createState() => _PembinaanBotnavState();
 }
 
 class _PembinaanBotnavState extends State<PembinaanBotnav> {
   int _currentIndex = 0;
-
   final List<Widget> _screens = const [
     PembinaanDashboard(),
     PembinaanModulScreen(),
     PembinaanProfileScreen(),
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +27,6 @@ class _PembinaanBotnavState extends State<PembinaanBotnav> {
             _currentIndex = index;
           });
         },
-
         // ====== STYLE IKUT DESAIN POJOK STATISTIK ======
         backgroundColor: Colors.white,
         elevation: 8,
@@ -39,8 +35,7 @@ class _PembinaanBotnavState extends State<PembinaanBotnav> {
         unselectedItemColor: Colors.grey,
         selectedFontSize: 12,
         unselectedFontSize: 12,
-
-        items: const [
+        items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard_outlined),
             label: "Beranda",

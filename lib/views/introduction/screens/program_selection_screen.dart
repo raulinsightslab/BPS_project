@@ -90,17 +90,14 @@ class _ProgramSelectionPageState extends State<ProgramSelectionPage> {
           child: Column(
             children: [
               SizedBox(height: 60),
-
               BPSLogoWidget(),
               SizedBox(height: 40),
-
               Text(
                 'Pilih Program Pembelajaran Anda',
                 style: Theme.of(context).textTheme.headlineMedium,
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 24),
-
               Expanded(
                 child: ListView.builder(
                   itemCount: _programs.length,
