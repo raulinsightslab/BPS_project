@@ -20,9 +20,9 @@ class _TugasScreenState extends State<TugasScreen> {
             // ================= HEADER =================
             SliverToBoxAdapter(
               child: Container(
-                padding: const EdgeInsets.fromLTRB(20, 24, 20, 32),
+                padding: EdgeInsets.fromLTRB(20, 24, 20, 32),
                 width: double.infinity,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: Color(0xff0B3D91),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(32),
@@ -70,12 +70,12 @@ class _TugasScreenState extends State<TugasScreen> {
                 ),
               ),
             ),
-            const SliverToBoxAdapter(child: SizedBox(height: 16)),
+            SliverToBoxAdapter(child: SizedBox(height: 16)),
             // ================= TAB BAR =================
             SliverToBoxAdapter(
               child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                padding: const EdgeInsets.all(8),
+                margin: EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),

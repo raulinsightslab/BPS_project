@@ -27,7 +27,7 @@ class _LearningPageState extends State<LearningPage> {
           videos: [
             VideoItem(
               title: "Penjelasan Umum Desa Cantik",
-              videoId: "cihJ34cCzNU",
+              videoId: "iuYm1CH4ALo",
             ),
           ],
         ),
