@@ -1,3 +1,4 @@
+import 'package:bps_e_learning/views/pojok_statistik/home/dashboard_screen.dart';
 import 'package:bps_e_learning/views/pojok_statistik/home/pojok_dashboard.dart';
 import 'package:bps_e_learning/views/pojok_statistik/home/pojok_modul_screen.dart';
 import 'package:bps_e_learning/views/pojok_statistik/home/pojok_profile_screen.dart';
