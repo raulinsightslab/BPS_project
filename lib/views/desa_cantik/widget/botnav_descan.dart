@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:bps_e_learning/views/desa_cantik/screen/kuis/kuis_list.dart';
 import 'package:bps_e_learning/views/desa_cantik/screen/learning_descan..dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class _BotnavDescanState extends State<BotnavDescan> {
   /// 🔥 Screen list TANPA HOME dulu
   final List<Widget> _screens = [
     const DesaCantikLearningScreen(), // index 0
-    const DesaTugasPage(), // index 1
+    const ModuleListScreen(), // index 1
     const SettingsPage(), // index 2
   ];
 

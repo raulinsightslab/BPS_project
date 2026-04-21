@@ -256,7 +256,7 @@ class DesaCantikLearningScreen extends StatelessWidget {
 
   Widget _buildSliverAppBar() {
     return SliverAppBar(
-      leading: null,
+      automaticallyImplyLeading: false,
       expandedHeight: 170,
       pinned: false,
       backgroundColor: DesaCColors.primary,

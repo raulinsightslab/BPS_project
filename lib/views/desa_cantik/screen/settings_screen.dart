@@ -119,7 +119,7 @@ class SettingsPage extends StatelessWidget {
               ),
               onPressed: () {
                 Navigator.pop(context); // tutup dialog
-                Navigator.popUntil(context, (route) => route.isFirst);
+                Navigator.pop(context);
               },
               child: const Text(
                 "Keluar",
