@@ -1,11 +1,7 @@
 import 'dart:ui';
-import 'package:bps_e_learning/views/desa_cantik/screen/kuis/kuis_list.dart';
+import 'package:bps_e_learning/views/desa_cantik/kuis/kuis_list.dart';
 import 'package:bps_e_learning/views/desa_cantik/screen/learning_descan..dart';
 import 'package:flutter/material.dart';
-
-// Screens kamu
-import 'package:bps_e_learning/views/desa_cantik/screen/learning_page.dart';
-import 'package:bps_e_learning/views/desa_cantik/screen/tugas_screen.dart';
 import 'package:bps_e_learning/views/desa_cantik/screen/settings_screen.dart';
 
 class BotnavDescan extends StatefulWidget {

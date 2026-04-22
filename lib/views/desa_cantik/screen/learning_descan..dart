@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 // ─── Color Constants ───────────────────────────────────────────────────────────
 class DesaCColors {
-  static const Color primary = Color(0xFFE67E22);
+  static const Color primary = Color(0xFFF59E0B);
+  static const Color primaryDark = Color(0xFFE65100);
   static const Color primaryLight = Color(0xFFFFF3E8);
   static const Color accentBlue = Color(0xFF0A2A6B);
   static const Color accentGreen = Color(0xFF1B8A4A);
@@ -14,6 +15,153 @@ class DesaCColors {
   static const Color textPrimary = Color(0xFF0A2A6B);
   static const Color textSecondary = Color(0xFF6B7A99);
   static const Color divider = Color(0xFFE8EDF5);
+}
+
+// ─── Shared AppBar Header Widget ──────────────────────────────────────────────
+class DesaCantikSliverAppBar extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final String badgeText;
+
+  const DesaCantikSliverAppBar({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.badgeText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final topPadding = MediaQuery.of(context).padding.top;
+    return SliverAppBar(
+      automaticallyImplyLeading: false,
+      expandedHeight: 160,
+      // FIX #2: pinned: true agar appbar tidak ikut scroll
+      pinned: true,
+      // FIX #4: backgroundColor pakai bg color supaya lengkungan kelihatan
+      backgroundColor: DesaCColors.bg,
+      elevation: 0,
+      flexibleSpace: FlexibleSpaceBar(
+        // FIX #3 & #4: Tidak pakai Spacer(), gunakan Column dengan mainAxisAlignment
+        // collapseMode none agar tidak ada parallax yang buat gap
+        collapseMode: CollapseMode.pin,
+        background: Container(
+          // FIX #4: bg luar transparan sehingga lengkungan bawah kelihatan
+          color: DesaCColors.bg,
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [DesaCColors.primary, DesaCColors.primaryDark],
+              ),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(28),
+                bottomRight: Radius.circular(28),
+              ),
+            ),
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(20, topPadding + 12, 20, 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Top Row: Logo + Title + Badge
+                  Row(
+                    children: [
+                      Container(
+                        width: 42,
+                        height: 42,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        alignment: Alignment.center,
+                        child: const Text(
+                          'DC',
+                          style: TextStyle(
+                            color: DesaCColors.primary,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      const Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Desa Cantik',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            Text(
+                              'BPS Kabupaten Tangerang',
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 11,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          badgeText,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // FIX #3: Tidak pakai Spacer, langsung bottom content
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.white,
+                          letterSpacing: -0.3,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        subtitle,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: Colors.white70,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 // ─── Data Model ───────────────────────────────────────────────────────────────
@@ -197,14 +345,23 @@ class DesaCantikLearningScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // FIX #1: Ambil bottom padding untuk hindari konten tertutup navbar
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
+
     return Scaffold(
       backgroundColor: DesaCColors.bg,
       body: CustomScrollView(
         slivers: [
-          _buildSliverAppBar(),
+          // FIX #7: Pakai shared header widget
+          const DesaCantikSliverAppBar(
+            title: 'Modul Pembelajaran',
+            subtitle: 'Tingkatkan pengetahuan statistikmu bersama BPS',
+            badgeText: '7 Modul',
+          ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+              // FIX #3: Kurangi top padding agar tidak ada gap besar
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
               child: Row(
                 children: [
                   Container(
@@ -248,148 +405,20 @@ class DesaCantikLearningScreen extends StatelessWidget {
               }, childCount: kModules.length),
             ),
           ),
-          const SliverToBoxAdapter(child: SizedBox(height: 32)),
+          // FIX #1: Bottom padding agar konten terakhir tidak tertutup navbar
+          SliverToBoxAdapter(child: SizedBox(height: 32 + bottomPadding + 60)),
         ],
       ),
     );
   }
-
-  Widget _buildSliverAppBar() {
-    return SliverAppBar(
-      automaticallyImplyLeading: false,
-      expandedHeight: 170,
-      pinned: false,
-      backgroundColor: DesaCColors.primary,
-      flexibleSpace: FlexibleSpaceBar(
-        background: Container(
-          color: DesaCColors.primary,
-          child: Stack(
-            children: [
-              Positioned(
-                right: -30,
-                top: -30,
-                child: Container(
-                  width: 180,
-                  height: 180,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white.withOpacity(0.08),
-                  ),
-                ),
-              ),
-              Positioned(
-                right: 50,
-                bottom: -30,
-                child: Container(
-                  width: 110,
-                  height: 110,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white.withOpacity(0.06),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: -20,
-                bottom: 10,
-                child: Container(
-                  width: 80,
-                  height: 80,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white.withOpacity(0.05),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 56, 20, 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.18),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: Colors.white.withOpacity(0.3),
-                          width: 1,
-                        ),
-                      ),
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.play_lesson_rounded,
-                            color: Colors.white,
-                            size: 12,
-                          ),
-                          SizedBox(width: 5),
-                          Text(
-                            'E-Learning BPS',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 10,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'Desa Cantik',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 26,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: -0.5,
-                      ),
-                    ),
-                    const Text(
-                      '7 Modul • 20 Video Pembelajaran',
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      // title: const Text(
-      //   'Desa Cantik',
-      //   style: TextStyle(
-      //       color: Colors.white, fontWeight: FontWeight.w700, fontSize: 16),
-      // ),
-    );
-  }
 }
 
-// ─── Module Section ─────────────────────────────────────────────────────────────
+// ─── Module Section ───────────────────────────────────────────────────────────
 class _ModuleSection extends StatelessWidget {
   final ModuleItem module;
-  final Function(int videoIndex) onVideoTap;
+  final void Function(int) onVideoTap;
 
   const _ModuleSection({required this.module, required this.onVideoTap});
-
-  Color get _lightBg {
-    if (module.accentColor == DesaCColors.accentGreen) {
-      return DesaCColors.accentGreenLight;
-    }
-    if (module.accentColor == DesaCColors.accentBlue) {
-      return DesaCColors.accentBlueLight;
-    }
-    return DesaCColors.primaryLight;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -401,35 +430,28 @@ class _ModuleSection extends StatelessWidget {
         border: Border.all(color: DesaCColors.divider, width: 1),
         boxShadow: [
           BoxShadow(
-            color: module.accentColor.withOpacity(0.07),
+            color: Colors.black.withOpacity(0.04),
             blurRadius: 12,
-            offset: const Offset(0, 3),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Module Header
+          // Header
           Container(
-            padding: const EdgeInsets.all(14),
+            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: _lightBg,
+              color: module.accentColor.withOpacity(0.06),
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(16),
-              ),
-              border: Border(
-                bottom: BorderSide(
-                  color: module.accentColor.withOpacity(0.15),
-                  width: 1,
-                ),
               ),
             ),
             child: Row(
               children: [
                 Container(
-                  width: 42,
-                  height: 42,
+                  width: 40,
+                  height: 40,
                   decoration: BoxDecoration(
                     color: module.accentColor,
                     borderRadius: BorderRadius.circular(10),
@@ -439,8 +461,8 @@ class _ModuleSection extends StatelessWidget {
                     module.num,
                     style: const TextStyle(
                       color: Colors.white,
+                      fontSize: 15,
                       fontWeight: FontWeight.w800,
-                      fontSize: 14,
                     ),
                   ),
                 ),
@@ -451,16 +473,16 @@ class _ModuleSection extends StatelessWidget {
                     children: [
                       Text(
                         module.title,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
-                          color: module.accentColor,
+                          color: DesaCColors.textPrimary,
                           height: 1.3,
                         ),
-                        maxLines: 2,
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 3),
+                      const SizedBox(height: 2),
                       Text(
                         module.description,
                         style: const TextStyle(

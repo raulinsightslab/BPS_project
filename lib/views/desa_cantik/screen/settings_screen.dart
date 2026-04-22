@@ -1,3 +1,4 @@
+import 'package:bps_e_learning/views/desa_cantik/screen/learning_descan..dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -55,9 +56,6 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  // =========================
-  // DIALOG: TENTANG APLIKASI
-  // =========================
   void showAboutDialogApp(BuildContext context) {
     showDialog(
       context: context,
@@ -90,9 +88,6 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  // =========================
-  // DIALOG: KONFIRMASI KELUAR
-  // =========================
   void showExitConfirmation(BuildContext context) {
     showDialog(
       context: context,
@@ -118,7 +113,7 @@ class SettingsPage extends StatelessWidget {
                 backgroundColor: Colors.red.shade600,
               ),
               onPressed: () {
-                Navigator.pop(context); // tutup dialog
+                Navigator.pop(context);
                 Navigator.pop(context);
               },
               child: const Text(
@@ -134,71 +129,69 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // FIX #1: Ambil bottom padding untuk hindari konten tertutup navbar
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
+
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Pengaturan",
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.orange.shade900,
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      // Tentang Aplikasi
-                      buildMenuItem(
-                        context: context,
-                        bgColor: Colors.orange.shade400,
-                        icon: Icons.info_outline,
-                        title: "Tentang Aplikasi",
-                        onTap: () => showAboutDialogApp(context),
-                      ),
-
-                      // Keluar Program
-                      buildMenuItem(
-                        context: context,
-                        bgColor: Colors.red.shade400,
-                        icon: Icons.exit_to_app,
-                        title: "Keluar Program",
-                        isDanger: true,
-                        onTap: () => showExitConfirmation(context),
-                      ),
-
-                      const SizedBox(height: 40),
-
-                      // Footer
-                      Column(
-                        children: [
-                          Text(
-                            "Versi Aplikasi 1.0.0",
-                            style: TextStyle(color: Colors.grey.shade700),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            "© 2025 Badan Pusat Statistik",
-                            style: TextStyle(color: Colors.grey.shade600),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+      // FIX #4: backgroundColor bg color supaya lengkungan header kelihatan
+      backgroundColor: DesaCColors.bg,
+      body: CustomScrollView(
+        slivers: [
+          // FIX #7: Pakai shared header widget yang sama dengan screen lain
+          const DesaCantikSliverAppBar(
+            title: 'Pengaturan',
+            subtitle: 'Kelola preferensi aplikasi Anda',
+            badgeText: 'v1.0.0',
           ),
-        ),
+          SliverToBoxAdapter(
+            child: Padding(
+              // FIX #3: Kurangi top padding agar tidak ada gap besar
+              padding: EdgeInsets.fromLTRB(20, 16, 20, 32 + bottomPadding + 60),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Tentang Aplikasi
+                  buildMenuItem(
+                    context: context,
+                    bgColor: Colors.orange.shade400,
+                    icon: Icons.info_outline,
+                    title: "Tentang Aplikasi",
+                    onTap: () => showAboutDialogApp(context),
+                  ),
+
+                  // Keluar Program
+                  buildMenuItem(
+                    context: context,
+                    bgColor: Colors.red.shade400,
+                    icon: Icons.exit_to_app,
+                    title: "Keluar Program",
+                    isDanger: true,
+                    onTap: () => showExitConfirmation(context),
+                  ),
+
+                  const SizedBox(height: 40),
+
+                  // Footer
+                  Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          "Versi Aplikasi 1.0.0",
+                          style: TextStyle(color: Colors.grey.shade700),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          "© 2025 Badan Pusat Statistik",
+                          style: TextStyle(color: Colors.grey.shade600),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

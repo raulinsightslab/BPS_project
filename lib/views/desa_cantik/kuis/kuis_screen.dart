@@ -1,5 +1,5 @@
 // lib/screens/quiz_screen.dart
-import 'package:bps_e_learning/views/desa_cantik/screen/kuis/kuis_data.dart';
+import 'package:bps_e_learning/views/desa_cantik/kuis/kuis_data.dart';
 import 'package:flutter/material.dart';
 import 'score_screen.dart';
 

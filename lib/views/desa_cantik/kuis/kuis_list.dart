@@ -1,6 +1,8 @@
 // lib/screens/module_list_screen.dart
-import 'package:bps_e_learning/views/desa_cantik/screen/kuis/kuis_data.dart';
-import 'package:bps_e_learning/views/desa_cantik/screen/kuis/kuis_screen.dart';
+import 'package:bps_e_learning/views/desa_cantik/kuis/kuis_data.dart';
+import 'package:bps_e_learning/views/desa_cantik/kuis/kuis_screen.dart';
+import 'package:bps_e_learning/views/desa_cantik/screen/learning_descan..dart';
+
 import 'package:flutter/material.dart';
 
 class ModuleListScreen extends StatelessWidget {
@@ -8,62 +10,23 @@ class ModuleListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // FIX #1: Ambil bottom padding untuk hindari konten tertutup navbar
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
+
     return Scaffold(
+      // FIX #4: backgroundColor bg color supaya lengkungan header kelihatan
+      backgroundColor: DesaCColors.bg,
       body: CustomScrollView(
         slivers: [
-          // Custom Header
-          SliverAppBar(
-            automaticallyImplyLeading: false,
-            expandedHeight: 200,
-            floating: true,
-            pinned: true,
-            backgroundColor: const Color(0xFFFF9500),
-            flexibleSpace: FlexibleSpaceBar(
-              background: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [const Color(0xFFFF9500), const Color(0xFFFF7B00)],
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 20),
-                    const Icon(Icons.school, size: 50, color: Colors.white),
-                    const SizedBox(height: 12),
-                    const Text(
-                      'Desa Cantik Quiz',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: const Text(
-                        '7 Modul • 15 Soal Per Modul',
-                        style: TextStyle(color: Colors.white, fontSize: 14),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+          // FIX #7: Pakai shared header widget yang sama dengan screen lain
+          const DesaCantikSliverAppBar(
+            title: 'Desa Cantik Quiz',
+            subtitle: '7 Modul • 15 Soal Per Modul',
+            badgeText: '7 Modul',
           ),
-          // Module List
+          // FIX #3: Kurangi top padding agar tidak ada gap besar
           SliverPadding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.fromLTRB(16, 12, 16, 32 + bottomPadding + 60),
             sliver: SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
                 final module = quizModules[index];
@@ -78,13 +41,13 @@ class ModuleListScreen extends StatelessWidget {
 
   Widget _buildModuleCard(BuildContext context, Module module) {
     final colors = [
-      const Color(0xFFFF9500), // Orange
-      const Color(0xFFFF6B6B), // Red
-      const Color(0xFF4ECDC4), // Teal
-      const Color(0xFF45B7D1), // Blue
-      const Color(0xFF96CEB4), // Green
-      const Color(0xFFDDA15E), // Brown
-      const Color(0xFFC9ADA7), // Mauve
+      const Color(0xFFFF9500),
+      const Color(0xFFFF6B6B),
+      const Color(0xFF4ECDC4),
+      const Color(0xFF45B7D1),
+      const Color(0xFF96CEB4),
+      const Color(0xFFDDA15E),
+      const Color(0xFFC9ADA7),
     ];
 
     final cardColor = colors[module.id - 1];
