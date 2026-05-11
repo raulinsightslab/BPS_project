@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:bps_e_learning/views/login.dart';
 
 // ─── Colors ───────────────────────────────────────────────────────────────────
 class _C {
@@ -33,7 +35,6 @@ class SettingsPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Logo row
           Row(
             children: [
               Container(
@@ -75,24 +76,18 @@ class SettingsPage extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          // Headline
           const Text(
             'Pengaturan',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w800,
               color: Colors.white,
-              letterSpacing: -0.3,
             ),
           ),
           const SizedBox(height: 4),
           const Text(
             'Kelola preferensi dan informasi aplikasi',
-            style: TextStyle(
-              fontSize: 13,
-              color: Colors.white70,
-              fontWeight: FontWeight.w400,
-            ),
+            style: TextStyle(fontSize: 13, color: Colors.white70),
           ),
         ],
       ),
@@ -100,7 +95,7 @@ class SettingsPage extends StatelessWidget {
   }
 
   // ==========================
-  // MENU ITEM BUILDER
+  // MENU ITEM
   // ==========================
   Widget buildMenuItem({
     required BuildContext context,
@@ -119,13 +114,6 @@ class SettingsPage extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(color: _C.cardBorder, width: 0.5),
-          boxShadow: [
-            BoxShadow(
-              color: _C.navy.withOpacity(0.07),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
-            ),
-          ],
         ),
         child: Row(
           children: [
@@ -140,7 +128,6 @@ class SettingsPage extends StatelessWidget {
               child: Icon(
                 icon,
                 color: isDanger ? Colors.red.shade700 : bgColor,
-                size: 20,
               ),
             ),
             const SizedBox(width: 14),
@@ -148,17 +135,12 @@ class SettingsPage extends StatelessWidget {
               child: Text(
                 title,
                 style: TextStyle(
-                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: isDanger ? Colors.red.shade700 : _C.navy,
                 ),
               ),
             ),
-            Icon(
-              Icons.chevron_right_rounded,
-              color: isDanger ? Colors.red.shade400 : _C.textSecondary,
-              size: 22,
-            ),
+            Icon(Icons.chevron_right, color: _C.textSecondary),
           ],
         ),
       ),
@@ -166,43 +148,26 @@ class SettingsPage extends StatelessWidget {
   }
 
   // ==========================
-  // DIALOG TENTANG PROGRAM
+  // ABOUT DIALOG
   // ==========================
   void showAboutDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text(
-          "Tentang Program",
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-            color: _C.navy,
-            fontSize: 16,
-          ),
-        ),
-        content: const Text(
+      builder: (_) => const AlertDialog(
+        content: Text(
           "Pojok Statistik Kabupaten Tangerang merupakan program kolaborasi "
           "antara Badan Pusat Statistik (BPS) dan pemerintah daerah untuk "
           "meningkatkan literasi statistik masyarakat.\n\n"
           "Program ini menyediakan akses data, edukasi statistik, serta "
           "pendampingan dalam pemanfaatan data sebagai dasar perencanaan "
           "dan pengambilan keputusan.",
-          textAlign: TextAlign.justify,
-          style: TextStyle(fontSize: 13, color: _C.textSecondary, height: 1.6),
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Tutup", style: TextStyle(color: _C.orange)),
-          ),
-        ],
       ),
     );
   }
 
   // ==========================
-  // DIALOG KELUAR PROGRAM
+  // 🔥 LOGOUT DIALOG (FIX)
   // ==========================
   void showExitDialog(BuildContext context) {
     showDialog(
@@ -210,44 +175,34 @@ class SettingsPage extends StatelessWidget {
       builder: (dialogContext) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: const Text(
-          "Keluar Program",
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-            color: _C.navy,
-            fontSize: 16,
-          ),
+          "Logout",
+          style: TextStyle(fontWeight: FontWeight.w700, color: _C.navy),
         ),
         content: const Text(
-          "Apakah Anda yakin ingin keluar dari halaman pengaturan?",
-          style: TextStyle(fontSize: 13, color: _C.textSecondary, height: 1.6),
+          "Apakah Anda yakin ingin keluar dari akun?",
+          style: TextStyle(color: _C.textSecondary),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
-            child: const Text(
-              "Batal",
-              style: TextStyle(color: _C.textSecondary),
-            ),
+            child: const Text("Batal"),
           ),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: _C.orange,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              elevation: 2,
-            ),
-            onPressed: () {
+            style: ElevatedButton.styleFrom(backgroundColor: _C.orange),
+            onPressed: () async {
+              // 🔥 LOGOUT FIREBASE
+              await FirebaseAuth.instance.signOut();
+
               Navigator.pop(dialogContext);
-              Navigator.pop(context);
+
+              // 🔥 RESET KE LOGIN
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => const LoginScreen()),
+                (route) => false,
+              );
             },
-            child: const Text(
-              "Keluar",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+            child: const Text("Logout"),
           ),
         ],
       ),
@@ -255,7 +210,7 @@ class SettingsPage extends StatelessWidget {
   }
 
   // ==========================
-  // BUILD UI
+  // BUILD
   // ==========================
   @override
   Widget build(BuildContext context) {
@@ -263,56 +218,25 @@ class SettingsPage extends StatelessWidget {
       backgroundColor: _C.bg,
       body: Column(
         children: [
-          // Header
           _buildHeader(context),
-
-          // Content
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
+              padding: const EdgeInsets.all(16),
               children: [
-                // Tentang Program
                 buildMenuItem(
                   context: context,
                   bgColor: _C.navy,
-                  icon: Icons.info_outline_rounded,
+                  icon: Icons.info,
                   title: "Tentang Program",
                   onTap: () => showAboutDialog(context),
                 ),
-
-                // Keluar Program
                 buildMenuItem(
                   context: context,
                   bgColor: Colors.red,
-                  icon: Icons.exit_to_app_rounded,
-                  title: "Keluar Program",
+                  icon: Icons.logout,
+                  title: "Logout",
                   isDanger: true,
                   onTap: () => showExitDialog(context),
-                ),
-
-                const SizedBox(height: 32),
-
-                // Footer
-                Column(
-                  children: [
-                    Text(
-                      "Versi Aplikasi 1.0.0",
-                      style: TextStyle(
-                        color: _C.textSecondary,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      "© 2025 Badan Pusat Statistik",
-                      style: TextStyle(
-                        color: _C.textSecondary,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
                 ),
               ],
             ),

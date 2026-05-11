@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "74618658038",
+    "project_id": "loginstatgem",
+    "storage_bucket": "loginstatgem.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:74618658038:android:834a58f3f4c5089fe3a0d7",
+        "android_client_info": {
+          "package_name": "com.example.bps_e_learning"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDI-8t7m4-IEn5KTJ3F7cYFzqsO_aAvFWg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

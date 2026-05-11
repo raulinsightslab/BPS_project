@@ -3,6 +3,7 @@ import 'package:bps_e_learning/core/widgets/glass_animate.dart';
 import 'package:bps_e_learning/core/widgets/logo_widget.dart';
 import 'package:bps_e_learning/core/widgets/page_indicator.dart';
 import 'package:bps_e_learning/views/introduction/screens/program_selection_screen.dart';
+import 'package:bps_e_learning/views/login.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingPage3 extends StatelessWidget {
@@ -48,12 +49,12 @@ class OnboardingPage3 extends StatelessWidget {
               SizedBox(height: 40),
               // Continue to Program Selection
               OnboardingButton(
-                text: 'Pilih Program',
+                text: 'Masuk',
                 onPressed: () {
-                  Navigator.of(context).push(
+                  Navigator.of(context).pushReplacement(
                     PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
-                          ProgramSelectionPage(),
+                          LoginScreen(),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
                             var begin = Offset(1.0, 0.0);

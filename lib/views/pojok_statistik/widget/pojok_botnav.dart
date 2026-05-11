@@ -1,8 +1,9 @@
 import 'dart:ui';
-import 'package:bps_e_learning/views/pojok_statistik/home/dashboard_screen.dart';
-import 'package:bps_e_learning/views/pojok_statistik/home/pojok_modul_screen.dart';
-import 'package:bps_e_learning/views/pojok_statistik/home/settings_screen.dart';
 import 'package:flutter/material.dart';
+
+// Ganti import sesuai struktur project lo
+import 'package:bps_e_learning/views/pojok_statistik/home/dashboard_screen.dart';
+import 'package:bps_e_learning/views/pojok_statistik/home/settings_screen.dart';
 
 class PojokMainScreen extends StatefulWidget {
   const PojokMainScreen({super.key});
@@ -14,21 +15,17 @@ class PojokMainScreen extends StatefulWidget {
 class _PojokMainScreenState extends State<PojokMainScreen> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = [
-    const DashboardScreen(),
-    // const TugasScreen(),
-    const SettingsPage(),
-  ];
+  // ✅ Hanya 2 screen: Modul & Settings
+  final List<Widget> _screens = [const DashboardScreen(), const SettingsPage()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // extendBody: true wajib agar konten bisa "tembus" ke bawah navbar
       extendBody: true,
       backgroundColor: Colors.white,
       body: _screens[_currentIndex],
+
       bottomNavigationBar: Padding(
-        // Navbar melayang: padding bawah + kiri kanan
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).padding.bottom > 0
               ? MediaQuery.of(context).padding.bottom
@@ -44,7 +41,6 @@ class _PojokMainScreenState extends State<PojokMainScreen> {
               filter: ImageFilter.blur(sigmaX: 22, sigmaY: 22),
               child: Container(
                 decoration: BoxDecoration(
-                  // Transparan kaya Telegram: putih dengan opacity rendah
                   color: Colors.white.withOpacity(0.55),
                   borderRadius: BorderRadius.circular(40),
                   border: Border.all(
@@ -61,7 +57,6 @@ class _PojokMainScreenState extends State<PojokMainScreen> {
                     BoxShadow(
                       color: Colors.black.withOpacity(0.05),
                       blurRadius: 8,
-                      spreadRadius: 0,
                       offset: const Offset(0, -2),
                     ),
                   ],
@@ -70,22 +65,16 @@ class _PojokMainScreenState extends State<PojokMainScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     _navItem(
-                      Icons.dashboard_outlined,
-                      Icons.dashboard_rounded,
-                      "Modul",
-                      0,
+                      iconOutlined: Icons.dashboard_outlined,
+                      iconFilled: Icons.dashboard_rounded,
+                      label: "Modul",
+                      index: 0,
                     ),
-                    // _navItem(
-                    //   Icons.assignment_outlined,
-                    //   Icons.assignment_rounded,
-                    //   "Tugas",
-                    //   1,
-                    // ),
                     _navItem(
-                      Icons.settings_outlined,
-                      Icons.settings_rounded,
-                      "Settings",
-                      2,
+                      iconOutlined: Icons.settings_outlined,
+                      iconFilled: Icons.settings_rounded,
+                      label: "Settings",
+                      index: 1, // ✅ FIX (bukan 2 lagi)
                     ),
                   ],
                 ),
@@ -97,12 +86,12 @@ class _PojokMainScreenState extends State<PojokMainScreen> {
     );
   }
 
-  Widget _navItem(
-    IconData iconOutlined,
-    IconData iconFilled,
-    String label,
-    int index,
-  ) {
+  Widget _navItem({
+    required IconData iconOutlined,
+    required IconData iconFilled,
+    required String label,
+    required int index,
+  }) {
     final bool active = _currentIndex == index;
     const activeColor = Color(0xFF1565C0);
 
