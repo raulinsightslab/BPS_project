@@ -1,8 +1,9 @@
+import 'package:bps_e_learning/core/utils/app_colors.dart';
+import 'package:bps_e_learning/core/utils/app_images.dart';
 import 'package:bps_e_learning/core/widgets/custom_button.dart';
 import 'package:bps_e_learning/core/widgets/glass_animate.dart';
 import 'package:bps_e_learning/core/widgets/logo_widget.dart';
 import 'package:bps_e_learning/core/widgets/page_indicator.dart';
-import 'package:bps_e_learning/views/introduction/screens/program_selection_screen.dart';
 import 'package:bps_e_learning/views/login.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,11 @@ class OnboardingPage3 extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFFFFA726), Color(0xFFFFE0B2), Color(0xFFFFFFFF)],
+            colors: [
+              AppColors.primary,
+              AppColors.primaryLight,
+              AppColors.background,
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -28,9 +33,7 @@ class OnboardingPage3 extends StatelessWidget {
               SizedBox(height: 40),
               // Illustration with Glass Effect
               Expanded(
-                child: GlassIllustrationBox(
-                  imagePath: 'assets/images/illustration3.png',
-                ),
+                child: GlassIllustrationBox(imagePath: AppImages.onboarding1),
               ),
               SizedBox(height: 40),
               // Headline

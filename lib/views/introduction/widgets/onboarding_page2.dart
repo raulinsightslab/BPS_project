@@ -1,3 +1,5 @@
+import 'package:bps_e_learning/core/utils/app_colors.dart';
+import 'package:bps_e_learning/core/utils/app_images.dart';
 import 'package:bps_e_learning/core/widgets/custom_button.dart';
 import 'package:bps_e_learning/core/widgets/glass_animate.dart';
 import 'package:bps_e_learning/core/widgets/logo_widget.dart';
@@ -12,7 +14,11 @@ class OnboardingPage2 extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFFFFA726), Color(0xFFFFE0B2), Color(0xFFFFFFFF)],
+            colors: [
+              AppColors.primary,
+              AppColors.primaryLight,
+              AppColors.background,
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -29,9 +35,7 @@ class OnboardingPage2 extends StatelessWidget {
 
               // Illustration with Glass Effect
               Expanded(
-                child: GlassIllustrationBox(
-                  imagePath: 'assets/images/illustration2.png',
-                ),
+                child: GlassIllustrationBox(imagePath: AppImages.onboarding2),
               ),
               SizedBox(height: 40),
 
