@@ -87,14 +87,10 @@ class _AuthWrapperState extends State<AuthWrapper> {
       );
     }
 
-    // 🚀 Belum pernah onboarding → tampilkan Onboarding dulu
-    // Flow: Onboarding → Login → ProgramSelection
     if (!_hasSeenOnboarding) {
       return OnboardingScreen();
     }
 
-    // ✅ Sudah onboarding → cek status login
-    // Flow: Login → ProgramSelection  |  Sudah login → langsung ProgramSelection
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
@@ -108,12 +104,10 @@ class _AuthWrapperState extends State<AuthWrapper> {
           );
         }
 
-        // ✅ Sudah login → langsung ke ProgramSelectionPage
         if (snapshot.hasData && snapshot.data != null) {
           return ProgramSelectionPage();
         }
 
-        // ❌ Belum login → tampilkan LoginScreen
         return const LoginScreen();
       },
     );

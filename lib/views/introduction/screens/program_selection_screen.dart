@@ -1,3 +1,4 @@
+import 'package:bps_e_learning/core/utils/app_colors.dart';
 import 'package:bps_e_learning/views/pembinaan_sektoral/widget/pembinaan_botnav.dart';
 import 'package:flutter/material.dart';
 import 'package:bps_e_learning/core/widgets/custom_button.dart';
@@ -80,7 +81,11 @@ class _ProgramSelectionPageState extends State<ProgramSelectionPage> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFFFFA726), Color(0xFFFFE0B2), Color(0xFFFFFFFF)],
+            colors: [
+              AppColors.primary,
+              AppColors.primaryLight,
+              AppColors.background,
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

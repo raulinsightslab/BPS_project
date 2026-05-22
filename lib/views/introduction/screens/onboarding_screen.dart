@@ -1,3 +1,4 @@
+import 'package:bps_e_learning/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import '../widgets/onboarding_page1.dart';
 import '../widgets/onboarding_page2.dart';
@@ -52,9 +53,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color(0xFFFFA726),
-                  Color(0xFFFFE0B2),
-                  Color(0xFFFFFFFF),
+                  AppColors.primary,
+                  AppColors.primaryLight,
+                  AppColors.background,
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,

@@ -1,3 +1,4 @@
+import 'package:bps_e_learning/core/utils/app_images.dart';
 import 'package:bps_e_learning/core/widgets/custom_button.dart';
 import 'package:bps_e_learning/core/widgets/glass_animate.dart';
 import 'package:bps_e_learning/core/widgets/logo_widget.dart';
@@ -19,9 +20,7 @@ class OnboardingPage1 extends StatelessWidget {
 
           // Illustration with Glass Effect
           Expanded(
-            child: GlassIllustrationBox(
-              imagePath: 'assets/images/illustration1.png',
-            ),
+            child: GlassIllustrationBox(imagePath: AppImages.onboarding1),
           ),
           SizedBox(height: 40),
 
