@@ -5,42 +5,20 @@ import '../widgets/onboarding_page2.dart';
 import '../widgets/onboarding_page3.dart';
 
 class OnboardingScreen extends StatefulWidget {
+  const OnboardingScreen({super.key});
+
   @override
-  _OnboardingScreenState createState() => _OnboardingScreenState();
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
-  int _currentPage = 0;
 
-  final List<Widget> _pages = [
-    OnboardingPage1(),
-    OnboardingPage2(),
-    OnboardingPage3(),
-  ];
-
-  void _onPageChanged(int page) {
-    setState(() {
-      _currentPage = page;
-    });
-  }
-
-  void _nextPage() {
-    if (_currentPage < _pages.length - 1) {
-      _pageController.nextPage(
-        duration: Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
-      );
-    }
-  }
-
-  void _previousPage() {
-    if (_currentPage > 0) {
-      _pageController.previousPage(
-        duration: Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
-      );
-    }
+  void _goToNextPage() {
+    _pageController.nextPage(
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
@@ -50,7 +28,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         children: [
           // Background Gradient
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
                   AppColors.primary,
@@ -63,12 +41,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
 
-          // PageView
-          PageView(
+          // PageView — pages dibuat lazy via builder agar tidak semua
+          // di-instantiate sekaligus saat pertama kali load
+          PageView.builder(
             controller: _pageController,
-            onPageChanged: _onPageChanged,
-            physics: ClampingScrollPhysics(),
-            children: _pages,
+            physics: const ClampingScrollPhysics(),
+            itemCount: 3,
+            itemBuilder: (context, index) {
+              switch (index) {
+                case 0:
+                  return OnboardingPage1(onNext: _goToNextPage);
+                case 1:
+                  return OnboardingPage2(onNext: _goToNextPage);
+                case 2:
+                  return OnboardingPage3();
+                default:
+                  return const SizedBox.shrink();
+              }
+            },
           ),
         ],
       ),

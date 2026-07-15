@@ -1,4 +1,4 @@
-import 'package:bps_e_learning/views/desa_cantik/screen/learning_descan..dart';
+import 'package:bps_e_learning/views/desa_cantik/screen/learning_descan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -32,8 +32,14 @@ class _DesaCantikVideoListScreenState extends State<DesaCantikVideoListScreen>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 
-    // Start from the given index, or find first available
+    // CRITICAL FIX: Start from the given index (preserves video position when re-entering)
     int startIndex = widget.initialVideoIndex;
+
+    // Only find first available if the initial index is invalid
+    if (startIndex < 0 || startIndex >= widget.module.videos.length) {
+      startIndex = 0;
+    }
+
     final v = widget.module.videos[startIndex];
     if (v.comingSoon || v.videoId.isEmpty) {
       startIndex = widget.module.videos.indexWhere(
@@ -174,7 +180,7 @@ class _DesaCantikVideoListScreenState extends State<DesaCantikVideoListScreen>
                 width: 72,
                 height: 72,
                 decoration: BoxDecoration(
-                  color: DesaCColors.accentGreen.withOpacity(0.12),
+                  color: DesaCColors.accentGreen.withValues(alpha: 0.12),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
@@ -221,7 +227,7 @@ class _DesaCantikVideoListScreenState extends State<DesaCantikVideoListScreen>
                       onPressed: () => Navigator.pop(context),
                       style: OutlinedButton.styleFrom(
                         side: BorderSide(
-                          color: DesaCColors.accentGreen.withOpacity(0.5),
+                          color: DesaCColors.accentGreen.withValues(alpha: 0.5),
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -391,7 +397,7 @@ class _DesaCantikVideoListScreenState extends State<DesaCantikVideoListScreen>
                             vertical: 5,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.white.withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(14),
                           ),
                           child: Text(
@@ -595,7 +601,7 @@ class _DesaCantikVideoListScreenState extends State<DesaCantikVideoListScreen>
             child: LinearProgressIndicator(
               value: progress,
               minHeight: 6,
-              backgroundColor: accentColor.withOpacity(0.12),
+              backgroundColor: accentColor.withValues(alpha: 0.12),
               valueColor: AlwaysStoppedAnimation<Color>(accentColor),
             ),
           ),
@@ -657,18 +663,18 @@ class _DesaCantikVideoListScreenState extends State<DesaCantikVideoListScreen>
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
-          color: isSelected ? accentColor.withOpacity(0.08) : Colors.white,
+          color: isSelected ? accentColor.withValues(alpha: 0.08) : Colors.white,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isSelected
-                ? accentColor.withOpacity(0.4)
+                ? accentColor.withValues(alpha: 0.4)
                 : DesaCColors.divider,
             width: isSelected ? 2 : 1,
           ),
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: accentColor.withOpacity(0.10),
+                    color: accentColor.withValues(alpha: 0.10),
                     blurRadius: 10,
                     offset: const Offset(0, 2),
                   ),
@@ -687,10 +693,10 @@ class _DesaCantikVideoListScreenState extends State<DesaCantikVideoListScreen>
                 height: 58,
                 child: isDisabled || video.videoId.isEmpty
                     ? Container(
-                        color: DesaCColors.accentBlue.withOpacity(0.07),
+                        color: DesaCColors.accentBlue.withValues(alpha: 0.07),
                         child: Icon(
                           Icons.lock_rounded,
-                          color: DesaCColors.accentBlue.withOpacity(0.3),
+                          color: DesaCColors.accentBlue.withValues(alpha: 0.3),
                           size: 20,
                         ),
                       )
@@ -701,17 +707,17 @@ class _DesaCantikVideoListScreenState extends State<DesaCantikVideoListScreen>
                             video.thumbnailUrl,
                             fit: BoxFit.cover,
                             errorBuilder: (_, __, ___) => Container(
-                              color: accentColor.withOpacity(0.1),
+                              color: accentColor.withValues(alpha: 0.1),
                               child: Icon(
                                 Icons.play_circle_outline,
-                                color: accentColor.withOpacity(0.4),
+                                color: accentColor.withValues(alpha: 0.4),
                                 size: 22,
                               ),
                             ),
                           ),
                           if (isSelected)
                             Container(
-                              color: accentColor.withOpacity(0.3),
+                              color: accentColor.withValues(alpha: 0.3),
                               child: const Center(
                                 child: Icon(
                                   Icons.play_circle_filled_rounded,
@@ -835,7 +841,7 @@ class _DesaCantikVideoListScreenState extends State<DesaCantikVideoListScreen>
                             'Belum ditonton',
                             style: TextStyle(
                               fontSize: 10,
-                              color: DesaCColors.textSecondary.withOpacity(0.7),
+                              color: DesaCColors.textSecondary.withValues(alpha: 0.7),
                             ),
                           ),
                       ],
@@ -854,10 +860,10 @@ class _DesaCantikVideoListScreenState extends State<DesaCantikVideoListScreen>
                           ? Icons.pause_circle_rounded
                           : Icons.play_circle_outline_rounded),
                 color: isDisabled
-                    ? Colors.orange.withOpacity(0.5)
+                    ? Colors.orange.withValues(alpha: 0.5)
                     : (isSelected
                           ? accentColor
-                          : DesaCColors.textSecondary.withOpacity(0.4)),
+                          : DesaCColors.textSecondary.withValues(alpha: 0.4)),
                 size: 22,
               ),
             ),

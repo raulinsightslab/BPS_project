@@ -1,82 +1,75 @@
+import 'package:bps_e_learning/core/utils/app_colors.dart';
 import 'package:bps_e_learning/core/utils/app_images.dart';
 import 'package:bps_e_learning/core/widgets/custom_button.dart';
 import 'package:bps_e_learning/core/widgets/glass_animate.dart';
 import 'package:bps_e_learning/core/widgets/logo_widget.dart';
-import 'package:bps_e_learning/views/introduction/widgets/onboarding_page2.dart';
+import 'package:bps_e_learning/core/widgets/page_indicator.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingPage1 extends StatelessWidget {
+  final VoidCallback? onNext;
+
+  const OnboardingPage1({super.key, this.onNext});
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(24.0),
-      child: Column(
-        children: [
-          SizedBox(height: 60),
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            AppColors.primary,
+            AppColors.primaryLight,
+            AppColors.background,
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          children: [
+            const SizedBox(height: 60),
 
-          // BPS Logo
-          BPSLogoWidget(),
-          SizedBox(height: 40),
+            // BPS Logo
+            BPSLogoWidget(),
+            const SizedBox(height: 40),
 
-          // Illustration with Glass Effect
-          Expanded(
-            child: GlassIllustrationBox(imagePath: AppImages.onboarding1),
-          ),
-          SizedBox(height: 40),
+            // Illustration with Glass Effect
+            Expanded(
+              child: GlassIllustrationBox(imagePath: AppImages.onboarding1),
+            ),
+            const SizedBox(height: 40),
 
-          // Headline
-          Text(
-            'Selamat Datang di StaT-Gem',
-            style: Theme.of(context).textTheme.headlineLarge,
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 16),
+            // Headline
+            Text(
+              'Selamat Datang di StaT-Gem',
+              style: Theme.of(context).textTheme.headlineLarge,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
 
-          // Subheadline
-          Text(
-            'Platform pembelajaran resmi dari BPS Kabupaten Tangerang.',
-            style: Theme.of(context).textTheme.bodyMedium,
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 40),
+            // Subheadline
+            Text(
+              'Platform pembelajaran resmi dari BPS Kabupaten Tangerang.',
+              style: Theme.of(context).textTheme.bodyMedium,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 40),
 
-          // Continue Button
-          OnboardingButton(
-            text: 'Lanjut',
-            onPressed: () {
-              Navigator.of(context).push(
-                PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) =>
-                      OnboardingPage2(),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) {
-                        var begin = Offset(1.0, 0.0);
-                        var end = Offset.zero;
-                        var curve = Curves.easeInOut;
-                        var tween = Tween(
-                          begin: begin,
-                          end: end,
-                        ).chain(CurveTween(curve: curve));
-                        var offsetAnimation = animation.drive(tween);
+            // Continue Button
+            OnboardingButton(text: 'Lanjut', onPressed: onNext),
+            const SizedBox(height: 24),
 
-                        return SlideTransition(
-                          position: offsetAnimation,
-                          child: child,
-                        );
-                      },
-                ),
-              );
-            },
-          ),
-          SizedBox(height: 24),
-
-          // Footer
-          Text(
-            '© 2025 Badan Pusat Statistik Kabupaten Tangerang',
-            style: Theme.of(context).textTheme.bodySmall,
-            textAlign: TextAlign.center,
-          ),
-        ],
+            // Page Indicator
+            const PageIndicator(
+              currentPage: 0,
+              totalPages: 3,
+              activeColor: Color(0xFFFFA726),
+              inactiveColor: Color(0xFFFFE0B2),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,4 @@
-// lib/views/auth/register_screen.dart
-
+import 'package:bps_e_learning/core/utils/app_colors.dart';
 import 'package:bps_e_learning/core/widgets/logo_widget.dart';
 import 'package:bps_e_learning/views/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,41 +33,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
-  // ─── Handle Register ───────────────────────────────────────────────────────
   Future<void> _handleRegister() async {
     if (!_formKey.currentState!.validate()) return;
-
     setState(() {
       _isLoading = true;
       _errorMessage = null;
     });
-
     try {
       await _authService.registerWithEmail(
         email: _emailCtrl.text,
         password: _passwordCtrl.text,
         displayName: _nameCtrl.text,
       );
-      // AuthWrapper di main.dart akan otomatis redirect setelah register berhasil
+      // AuthWrapper akan otomatis redirect setelah register berhasil
     } on FirebaseAuthException catch (e) {
-      setState(() {
-        _errorMessage = AuthService.getErrorMessage(e.code);
-      });
+      setState(() => _errorMessage = AuthService.getErrorMessage(e.code));
     } catch (_) {
-      setState(() {
-        _errorMessage = 'Terjadi kesalahan. Silakan coba lagi.';
-      });
+      setState(() => _errorMessage = 'Terjadi kesalahan. Silakan coba lagi.');
     } finally {
-      if (mounted) {
-        setState(() => _isLoading = false);
-      }
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F6FA),
+      backgroundColor: AppColors.authBg,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -76,10 +66,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 24),
-
-              // ─── Back Button ───────────────────────────────────────────────
               GestureDetector(
-                onTap: () => Navigator.pop(context),
+                onTap: () => Navigator.of(context).pop(),
                 child: Container(
                   width: 40,
                   height: 40,
@@ -88,7 +76,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.06),
+                        color: Colors.black.withValues(alpha: 0.06),
                         blurRadius: 10,
                         offset: const Offset(0, 2),
                       ),
@@ -97,55 +85,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: const Icon(
                     Icons.arrow_back_ios_new_rounded,
                     size: 18,
-                    color: Color(0xFF0A2A6B),
+                    color: AppColors.authNavy,
                   ),
                 ),
               ),
-
               const SizedBox(height: 28),
-
-              // ─── Header ────────────────────────────────────────────────────
-              BPSLogoWidget(),
-              // Center(
-              //   child: Container(
-              //     width: 72,
-              //     height: 72,
-              //     decoration: BoxDecoration(
-              //       gradient: const LinearGradient(
-              //         colors: [Color(0xFFF59E0B), Color(0xFFE65100)],
-              //         begin: Alignment.topLeft,
-              //         end: Alignment.bottomRight,
-              //       ),
-              //       borderRadius: BorderRadius.circular(20),
-              //       boxShadow: [
-              //         BoxShadow(
-              //           color: const Color(0xFFF59E0B).withOpacity(0.4),
-              //           blurRadius: 20,
-              //           offset: const Offset(0, 8),
-              //         ),
-              //       ],
-              //     ),
-              //     alignment: Alignment.center,
-              //     // child: const Text(
-              //     //   'DC',
-              //     //   style: TextStyle(
-              //     //     color: Colors.white,
-              //     //     fontSize: 26,
-              //     //     fontWeight: FontWeight.w900,
-              //     //     letterSpacing: 0.5,
-              //     //   ),
-              //     // ),
-              //   ),
-              // ),
+              const BPSLogoWidget(),
               const SizedBox(height: 24),
-
               const Center(
                 child: Text(
                   'Buat Akun Baru',
                   style: TextStyle(
                     fontSize: 26,
                     fontWeight: FontWeight.w800,
-                    color: Color(0xFF0A2A6B),
+                    color: AppColors.authNavy,
                   ),
                 ),
               ),
@@ -153,18 +106,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const Center(
                 child: Text(
                   'Daftarkan diri untuk mulai belajar',
-                  style: TextStyle(fontSize: 14, color: Color(0xFF6B7A99)),
+                  style: TextStyle(fontSize: 14, color: AppColors.authNavyText),
                 ),
               ),
-
               const SizedBox(height: 32),
-
-              // ─── Form ──────────────────────────────────────────────────────
               Form(
                 key: _formKey,
                 child: Column(
                   children: [
-                    // Nama Lengkap
                     _buildTextField(
                       controller: _nameCtrl,
                       label: 'Nama Lengkap',
@@ -180,10 +129,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         return null;
                       },
                     ),
-
                     const SizedBox(height: 16),
-
-                    // Email
                     _buildTextField(
                       controller: _emailCtrl,
                       label: 'Email',
@@ -202,10 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         return null;
                       },
                     ),
-
                     const SizedBox(height: 16),
-
-                    // Password
                     _buildTextField(
                       controller: _passwordCtrl,
                       label: 'Password',
@@ -217,7 +160,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           _obscurePassword
                               ? Icons.visibility_off_outlined
                               : Icons.visibility_outlined,
-                          color: const Color(0xFF6B7A99),
+                          color: AppColors.authNavyText,
                           size: 20,
                         ),
                         onPressed: () => setState(
@@ -234,10 +177,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         return null;
                       },
                     ),
-
                     const SizedBox(height: 16),
-
-                    // Konfirmasi Password
                     _buildTextField(
                       controller: _confirmPasswordCtrl,
                       label: 'Konfirmasi Password',
@@ -249,7 +189,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           _obscureConfirm
                               ? Icons.visibility_off_outlined
                               : Icons.visibility_outlined,
-                          color: const Color(0xFF6B7A99),
+                          color: AppColors.authNavyText,
                           size: 20,
                         ),
                         onPressed: () =>
@@ -265,8 +205,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         return null;
                       },
                     ),
-
-                    // Error message
                     if (_errorMessage != null) ...[
                       const SizedBox(height: 16),
                       Container(
@@ -301,20 +239,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ],
-
                     const SizedBox(height: 28),
-
-                    // Tombol Daftar
                     SizedBox(
                       width: double.infinity,
                       height: 52,
                       child: ElevatedButton(
                         onPressed: _isLoading ? null : _handleRegister,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFF59E0B),
-                          disabledBackgroundColor: const Color(
-                            0xFFF59E0B,
-                          ).withOpacity(0.6),
+                          backgroundColor: AppColors.authOrange,
+                          disabledBackgroundColor: AppColors.authOrange
+                              .withValues(alpha: 0.6),
                           foregroundColor: Colors.white,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
@@ -342,10 +276,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ],
                 ),
               ),
-
               const SizedBox(height: 24),
-
-              // ─── Link ke Login ─────────────────────────────────────────────
               Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -358,11 +289,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () => Navigator.pop(context),
+                      onTap: () => Navigator.of(context).pop(),
                       child: const Text(
                         'Masuk',
                         style: TextStyle(
-                          color: Color(0xFFF59E0B),
+                          color: AppColors.authOrange,
                           fontWeight: FontWeight.w700,
                           fontSize: 14,
                         ),
@@ -371,7 +302,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ],
                 ),
               ),
-
               const SizedBox(height: 32),
             ],
           ),
@@ -380,7 +310,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  // ─── Reusable TextField Builder ────────────────────────────────────────────
   Widget _buildTextField({
     required TextEditingController controller,
     required String label,
@@ -399,7 +328,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           style: const TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF0A2A6B),
+            color: AppColors.authNavy,
           ),
         ),
         const SizedBox(height: 8),
@@ -408,11 +337,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
           keyboardType: keyboardType,
           obscureText: obscureText,
           validator: validator,
-          style: const TextStyle(fontSize: 14, color: Color(0xFF0A2A6B)),
+          style: const TextStyle(fontSize: 14, color: AppColors.authNavy),
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
-            prefixIcon: Icon(icon, color: const Color(0xFF6B7A99), size: 20),
+            prefixIcon: Icon(icon, color: AppColors.authNavyText, size: 20),
             suffixIcon: suffixIcon,
             filled: true,
             fillColor: Colors.white,
@@ -422,22 +351,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.grey.shade200, width: 1),
+              borderSide: BorderSide(color: Colors.grey.shade200),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.grey.shade200, width: 1),
+              borderSide: BorderSide(color: Colors.grey.shade200),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: const BorderSide(
-                color: Color(0xFFF59E0B),
+                color: AppColors.authOrange,
                 width: 1.5,
               ),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.red.shade400, width: 1),
+              borderSide: BorderSide(color: Colors.red.shade400),
             ),
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),

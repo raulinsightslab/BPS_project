@@ -116,7 +116,7 @@ class DesaCantikSliverAppBar extends StatelessWidget {
                           vertical: 6,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
@@ -430,7 +430,7 @@ class _ModuleSection extends StatelessWidget {
         border: Border.all(color: DesaCColors.divider, width: 1),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 12,
             offset: const Offset(0, 2),
           ),
@@ -442,7 +442,7 @@ class _ModuleSection extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: module.accentColor.withOpacity(0.06),
+              color: module.accentColor.withValues(alpha: 0.06),
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(16),
               ),
@@ -503,7 +503,7 @@ class _ModuleSection extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: module.accentColor.withOpacity(0.12),
+                    color: module.accentColor.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
@@ -583,14 +583,16 @@ class _VideoThumbnailTile extends StatelessWidget {
                 height: 68,
                 child: isDisabled || video.videoId.isEmpty
                     ? Container(
-                        color: DesaCColors.accentBlue.withOpacity(0.07),
+                        color: DesaCColors.accentBlue.withValues(alpha: 0.07),
                         child: Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
                                 Icons.lock_rounded,
-                                color: DesaCColors.accentBlue.withOpacity(0.4),
+                                color: DesaCColors.accentBlue.withValues(
+                                  alpha: 0.4,
+                                ),
                                 size: 22,
                               ),
                               const SizedBox(height: 4),
@@ -599,8 +601,8 @@ class _VideoThumbnailTile extends StatelessWidget {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 9,
-                                  color: DesaCColors.accentBlue.withOpacity(
-                                    0.5,
+                                  color: DesaCColors.accentBlue.withValues(
+                                    alpha: 0.5,
                                   ),
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -616,10 +618,14 @@ class _VideoThumbnailTile extends StatelessWidget {
                             video.thumbnailUrl,
                             fit: BoxFit.cover,
                             errorBuilder: (_, __, ___) => Container(
-                              color: DesaCColors.accentBlue.withOpacity(0.1),
+                              color: DesaCColors.accentBlue.withValues(
+                                alpha: 0.1,
+                              ),
                               child: Icon(
                                 Icons.play_circle_outline,
-                                color: DesaCColors.accentBlue.withOpacity(0.4),
+                                color: DesaCColors.accentBlue.withValues(
+                                  alpha: 0.4,
+                                ),
                                 size: 28,
                               ),
                             ),
@@ -629,7 +635,7 @@ class _VideoThumbnailTile extends StatelessWidget {
                               width: 30,
                               height: 30,
                               decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.55),
+                                color: Colors.black.withValues(alpha: 0.55),
                                 shape: BoxShape.circle,
                               ),
                               child: const Icon(
@@ -707,8 +713,8 @@ class _VideoThumbnailTile extends StatelessWidget {
                   ? Icons.lock_outline_rounded
                   : Icons.chevron_right_rounded,
               color: isDisabled
-                  ? Colors.orange.withOpacity(0.6)
-                  : DesaCColors.textSecondary.withOpacity(0.5),
+                  ? Colors.orange.withValues(alpha: 0.6)
+                  : DesaCColors.textSecondary.withValues(alpha: 0.5),
               size: isDisabled ? 16 : 20,
             ),
           ],

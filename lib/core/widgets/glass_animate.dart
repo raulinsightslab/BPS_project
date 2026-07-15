@@ -1,14 +1,12 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class GlassIllustrationBox extends StatefulWidget {
   final String imagePath;
 
-  const GlassIllustrationBox({Key? key, required this.imagePath})
-    : super(key: key);
+  const GlassIllustrationBox({super.key, required this.imagePath});
 
   @override
-  _GlassIllustrationBoxState createState() => _GlassIllustrationBoxState();
+  State<GlassIllustrationBox> createState() => _GlassIllustrationBoxState();
 }
 
 class _GlassIllustrationBoxState extends State<GlassIllustrationBox>
@@ -20,7 +18,7 @@ class _GlassIllustrationBoxState extends State<GlassIllustrationBox>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: Duration(seconds: 4),
+      duration: const Duration(seconds: 4),
       vsync: this,
     )..repeat(reverse: true);
 
@@ -44,27 +42,19 @@ class _GlassIllustrationBoxState extends State<GlassIllustrationBox>
               borderRadius: BorderRadius.circular(24),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withValues(alpha: 0.1),
                   blurRadius: 16,
-                  offset: Offset(0, 8),
+                  offset: const Offset(0, 8),
                 ),
               ],
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(24),
-              child: Stack(
-                children: [
-                  // IMAGE TIDAK TERKENA BLUR
-                  Image.asset(
-                    widget.imagePath,
-                    width: double.infinity,
-                    height: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-
-                  // Transparent layer (tetap ada untuk menjaga struktur awal)
-                  Container(color: Colors.transparent),
-                ],
+              child: Image.asset(
+                widget.imagePath,
+                width: double.infinity,
+                height: double.infinity,
+                fit: BoxFit.cover,
               ),
             ),
           ),

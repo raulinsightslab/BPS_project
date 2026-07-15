@@ -1,64 +1,44 @@
 import 'package:flutter/material.dart';
 
-extension ExtendedNavigator on BuildContext {
-  Future<dynamic> push(Widget page, {String? name}) async {
-    return Navigator.push(
-      this,
+extension AppNavigator on BuildContext {
+  /// Push halaman baru ke stack.
+  Future<T?> pushPage<T>(Widget page) {
+    return Navigator.of(this).push<T>(
       MaterialPageRoute(
         builder: (_) => page,
-        settings: RouteSettings(name: name ?? page.runtimeType.toString()),
+        settings: RouteSettings(name: page.runtimeType.toString()),
       ),
     );
   }
 
-  Future<dynamic> pushReplacement(Widget page, {String? name}) async {
-    return Navigator.pushReplacement(
-      this,
+  /// Ganti halaman saat ini (tidak bisa back).
+  Future<T?> pushReplacePage<T>(Widget page) {
+    return Navigator.of(this).pushReplacement<T, dynamic>(
       MaterialPageRoute(
         builder: (_) => page,
-        settings: RouteSettings(name: name ?? page.runtimeType.toString()),
+        settings: RouteSettings(name: page.runtimeType.toString()),
       ),
     );
   }
 
-  Future<dynamic> pushNamed(String routeName, {Object? arguments}) async {
-    return Navigator.of(this).pushNamed(routeName, arguments: arguments);
-  }
-
-  Future<dynamic> pushReplacementNamed(
-    String newRouteName, {
-    Object? arguments,
-  }) {
-    Navigator.popUntil(this, ModalRoute.withName(newRouteName));
-    return Navigator.pushNamed(this, newRouteName, arguments: arguments);
-  }
-
-  Future<dynamic> pushNamedAndRemoveUntil(
-    String newRouteName,
-    RoutePredicate predicate, {
-    Object? arguments,
-  }) async {
-    Navigator.pushNamedAndRemoveUntil(
-      this,
-      newRouteName,
-      predicate,
-      arguments: arguments,
-    );
-  }
-
-  Future<dynamic> pushNamedAndRemoveAll(
-    String newRouteName, {
-    Object? arguments,
-  }) async {
-    Navigator.pushNamedAndRemoveUntil(
-      this,
-      newRouteName,
+  /// Push dan hapus semua route sebelumnya.
+  Future<T?> pushAndRemoveAllPages<T>(Widget page) {
+    return Navigator.of(this).pushAndRemoveUntil<T>(
+      MaterialPageRoute(
+        builder: (_) => page,
+        settings: RouteSettings(name: page.runtimeType.toString()),
+      ),
       (route) => false,
-      arguments: arguments,
     );
   }
 
-  void pop([result]) async {
-    return Navigator.of(this).pop(result);
+  /// Pop halaman saat ini.
+  void popPage<T>([T? result]) {
+    Navigator.of(this).pop(result);
+  }
+
+  /// Pop sampai halaman pertama.
+  void popToFirst() {
+    Navigator.of(this).popUntil((route) => route.isFirst);
   }
 }

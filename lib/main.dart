@@ -1,4 +1,4 @@
-// lib/main.dart
+import 'package:bps_e_learning/splash_screen.dart';
 import 'package:bps_e_learning/views/introduction/screens/onboarding_screen.dart';
 import 'package:bps_e_learning/views/introduction/screens/program_selection_screen.dart';
 import 'package:bps_e_learning/views/login.dart';
@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:bps_e_learning/core/utils/app_colors.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -30,18 +30,47 @@ class MyApp extends StatelessWidget {
           headlineLarge: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF212121),
+            color: AppColors.textPrimary,
           ),
           headlineMedium: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF212121),
+            color: AppColors.textPrimary,
           ),
-          bodyMedium: TextStyle(fontSize: 16, color: Color(0xFF616161)),
-          bodySmall: TextStyle(fontSize: 14, color: Color(0xFF616161)),
+          bodyMedium: TextStyle(fontSize: 16, color: AppColors.textSecondary),
+          bodySmall: TextStyle(fontSize: 14, color: AppColors.textSecondary),
         ),
       ),
-      home: const AuthWrapper(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const AuthWrapper(),
+        '/home': (context) => const HomeWrapper(),
+      },
+    );
+  }
+}
+
+class HomeWrapper extends StatelessWidget {
+  const HomeWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            backgroundColor: AppColors.authBg,
+            body: Center(
+              child: CircularProgressIndicator(color: AppColors.authOrange),
+            ),
+          );
+        }
+        if (snapshot.hasData && snapshot.data != null) {
+          return const ProgramSelectionPage();
+        }
+        return const LoginScreen();
+      },
     );
   }
 }
@@ -66,9 +95,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
   Future<void> _checkInitialStatus() async {
     final prefs = await SharedPreferences.getInstance();
     final hasSeenOnboarding = prefs.getBool('hasSeenOnboarding') ?? false;
-
     if (!mounted) return;
-
     setState(() {
       _hasSeenOnboarding = hasSeenOnboarding;
       _isLoading = false;
@@ -77,39 +104,14 @@ class _AuthWrapperState extends State<AuthWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    // 🔄 Loading SharedPreferences
     if (_isLoading) {
-      return const Scaffold(
-        backgroundColor: Color(0xFFF4F6FA),
-        body: Center(
-          child: CircularProgressIndicator(color: Color(0xFFF59E0B)),
-        ),
-      );
+      return const SplashScreen();
     }
 
     if (!_hasSeenOnboarding) {
-      return OnboardingScreen();
+      return const OnboardingScreen();
     }
 
-    return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        // ⏳ Loading Auth State
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Scaffold(
-            backgroundColor: Color(0xFFF4F6FA),
-            body: Center(
-              child: CircularProgressIndicator(color: Color(0xFFF59E0B)),
-            ),
-          );
-        }
-
-        if (snapshot.hasData && snapshot.data != null) {
-          return ProgramSelectionPage();
-        }
-
-        return const LoginScreen();
-      },
-    );
+    return const HomeWrapper();
   }
 }

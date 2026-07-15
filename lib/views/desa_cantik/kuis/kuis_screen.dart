@@ -104,8 +104,10 @@ class _QuizScreenState extends State<QuizScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -128,7 +130,6 @@ class _QuizScreenState extends State<QuizScreen> {
             ],
           ),
         );
-        return false;
       },
       child: Scaffold(
         appBar: AppBar(
@@ -200,7 +201,7 @@ class _QuizScreenState extends State<QuizScreen> {
   Widget _buildProgressBar() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      color: const Color(0xFFFF9500).withOpacity(0.1),
+      color: const Color(0xFFFF9500).withValues(alpha: 0.1),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -234,7 +235,7 @@ class _QuizScreenState extends State<QuizScreen> {
             child: LinearProgressIndicator(
               value: (_currentIndex + 1) / widget.module.questions.length,
               minHeight: 8,
-              backgroundColor: const Color(0xFFFF9500).withOpacity(0.2),
+              backgroundColor: const Color(0xFFFF9500).withValues(alpha: 0.2),
               valueColor: const AlwaysStoppedAnimation<Color>(
                 Color(0xFFFF9500),
               ),
@@ -317,10 +318,10 @@ class _QuizScreenState extends State<QuizScreen> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: const Color(0xFFFF9500).withOpacity(0.1),
+              color: const Color(0xFFFF9500).withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: const Color(0xFFFF9500).withOpacity(0.3),
+                color: const Color(0xFFFF9500).withValues(alpha: 0.3),
                 width: 1.5,
               ),
             ),
@@ -386,7 +387,7 @@ class _QuizScreenState extends State<QuizScreen> {
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFFFF9500).withOpacity(0.15)
+              ? const Color(0xFFFF9500).withValues(alpha: 0.15)
               : Colors.grey[50],
           border: Border.all(
             color: isSelected ? const Color(0xFFFF9500) : Colors.grey[300]!,
@@ -396,7 +397,7 @@ class _QuizScreenState extends State<QuizScreen> {
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: const Color(0xFFFF9500).withOpacity(0.2),
+                    color: const Color(0xFFFF9500).withValues(alpha: 0.2),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -441,7 +442,7 @@ class _QuizScreenState extends State<QuizScreen> {
               Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFF9500).withOpacity(0.2),
+                  color: const Color(0xFFFF9500).withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Icon(
@@ -461,9 +462,9 @@ class _QuizScreenState extends State<QuizScreen> {
       return Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Colors.green.withOpacity(0.1),
+          color: Colors.green.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.green.withOpacity(0.4), width: 1.5),
+          border: Border.all(color: Colors.green.withValues(alpha: 0.4), width: 1.5),
         ),
         child: Row(
           children: [
@@ -486,9 +487,9 @@ class _QuizScreenState extends State<QuizScreen> {
       return Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Colors.orange.withOpacity(0.1),
+          color: Colors.orange.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.orange.withOpacity(0.4), width: 1.5),
+          border: Border.all(color: Colors.orange.withValues(alpha: 0.4), width: 1.5),
         ),
         child: Row(
           children: [

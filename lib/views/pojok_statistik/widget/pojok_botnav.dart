@@ -1,9 +1,8 @@
 import 'dart:ui';
-import 'package:flutter/material.dart';
-
-// Ganti import sesuai struktur project lo
+import 'package:bps_e_learning/core/utils/app_colors.dart';
 import 'package:bps_e_learning/views/pojok_statistik/home/dashboard_screen.dart';
 import 'package:bps_e_learning/views/pojok_statistik/home/settings_screen.dart';
+import 'package:flutter/material.dart';
 
 class PojokMainScreen extends StatefulWidget {
   const PojokMainScreen({super.key});
@@ -15,16 +14,16 @@ class PojokMainScreen extends StatefulWidget {
 class _PojokMainScreenState extends State<PojokMainScreen> {
   int _currentIndex = 0;
 
-  // ✅ Hanya 2 screen: Modul & Settings
-  final List<Widget> _screens = [const DashboardScreen(), const SettingsPage()];
+  // FIX: gunakan IndexedStack agar screen tidak di-rebuild setiap switch tab,
+  // tapi juga tidak semua di-instantiate sekaligus saat pertama load.
+  static const _screens = [DashboardScreen(), SettingsPage()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
       backgroundColor: Colors.white,
-      body: _screens[_currentIndex],
-
+      body: IndexedStack(index: _currentIndex, children: _screens),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).padding.bottom > 0
@@ -41,21 +40,21 @@ class _PojokMainScreenState extends State<PojokMainScreen> {
               filter: ImageFilter.blur(sigmaX: 22, sigmaY: 22),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.55),
+                  color: Colors.white.withValues(alpha: 0.55),
                   borderRadius: BorderRadius.circular(40),
                   border: Border.all(
-                    color: Colors.white.withOpacity(0.9),
+                    color: Colors.white.withValues(alpha: 0.9),
                     width: 1.2,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.12),
+                      color: Colors.black.withValues(alpha: 0.12),
                       blurRadius: 30,
                       spreadRadius: 2,
                       offset: const Offset(0, 10),
                     ),
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 8,
                       offset: const Offset(0, -2),
                     ),
@@ -67,14 +66,14 @@ class _PojokMainScreenState extends State<PojokMainScreen> {
                     _navItem(
                       iconOutlined: Icons.dashboard_outlined,
                       iconFilled: Icons.dashboard_rounded,
-                      label: "Modul",
+                      label: 'Modul',
                       index: 0,
                     ),
                     _navItem(
                       iconOutlined: Icons.settings_outlined,
                       iconFilled: Icons.settings_rounded,
-                      label: "Settings",
-                      index: 1, // ✅ FIX (bukan 2 lagi)
+                      label: 'Settings',
+                      index: 1,
                     ),
                   ],
                 ),
@@ -93,7 +92,7 @@ class _PojokMainScreenState extends State<PojokMainScreen> {
     required int index,
   }) {
     final bool active = _currentIndex == index;
-    const activeColor = Color(0xFF1565C0);
+    const activeColor = AppColors.pojokNavyLight;
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -103,10 +102,15 @@ class _PojokMainScreenState extends State<PojokMainScreen> {
         curve: Curves.easeOutCubic,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
-          color: active ? activeColor.withOpacity(0.1) : Colors.transparent,
+          color: active
+              ? activeColor.withValues(alpha: 0.1)
+              : Colors.transparent,
           borderRadius: BorderRadius.circular(30),
           border: active
-              ? Border.all(color: activeColor.withOpacity(0.25), width: 1.2)
+              ? Border.all(
+                  color: activeColor.withValues(alpha: 0.25),
+                  width: 1.2,
+                )
               : null,
         ),
         child: Column(

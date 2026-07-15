@@ -200,7 +200,7 @@ class _Header extends StatelessWidget {
                   vertical: 5,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.15),
+                  color: Colors.white.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Text(
@@ -264,9 +264,9 @@ class _StatChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.12),
+        color: Colors.white.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withOpacity(0.2), width: 0.5),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.2), width: 0.5),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -349,7 +349,7 @@ class _VideoCard extends StatelessWidget {
           border: Border.all(color: _C.cardBorder, width: 0.5),
           boxShadow: [
             BoxShadow(
-              color: _C.navy.withOpacity(0.07),
+              color: _C.navy.withValues(alpha: 0.07),
               blurRadius: 16,
               offset: const Offset(0, 4),
             ),
@@ -402,8 +402,8 @@ class _VideoCard extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    _gradient[0].withOpacity(0.72),
-                    _gradient[1].withOpacity(0.45),
+                    _gradient[0].withValues(alpha: 0.72),
+                    _gradient[1].withValues(alpha: 0.45),
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -437,11 +437,11 @@ class _VideoCard extends StatelessWidget {
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: _C.orange.withOpacity(0.92),
+                  color: _C.orange.withValues(alpha: 0.92),
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: _C.orange.withOpacity(0.45),
+                      color: _C.orange.withValues(alpha: 0.45),
                       blurRadius: 16,
                       spreadRadius: 2,
                     ),
@@ -461,7 +461,7 @@ class _VideoCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.55),
+                  color: Colors.black.withValues(alpha: 0.55),
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: const Text(

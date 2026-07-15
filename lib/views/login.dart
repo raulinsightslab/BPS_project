@@ -1,6 +1,6 @@
-// lib/views/auth/login_screen.dart
-
+import 'package:bps_e_learning/core/utils/app_colors.dart';
 import 'package:bps_e_learning/core/widgets/logo_widget.dart';
+import 'package:bps_e_learning/extensions/extension.dart';
 import 'package:bps_e_learning/views/auth_service.dart';
 import 'package:bps_e_learning/views/introduction/screens/program_selection_screen.dart';
 import 'package:bps_e_learning/views/register.dart';
@@ -31,51 +31,33 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  // ─── Handle Login ──────────────────────────────────────────────────────────
   Future<void> _handleLogin() async {
     if (!_formKey.currentState!.validate()) return;
-
     setState(() {
       _isLoading = true;
       _errorMessage = null;
     });
-
     try {
       await _authService.loginWithEmail(
         email: _emailCtrl.text,
         password: _passwordCtrl.text,
       );
-
-      // Navigasi ke ProgramSelectionPage setelah login berhasil
-      if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => ProgramSelectionPage()),
-        );
-      }
+      if (mounted) context.pushReplacePage(const ProgramSelectionPage());
     } on FirebaseAuthException catch (e) {
-      setState(() {
-        _errorMessage = AuthService.getErrorMessage(e.code);
-      });
+      setState(() => _errorMessage = AuthService.getErrorMessage(e.code));
     } catch (_) {
-      setState(() {
-        _errorMessage = 'Terjadi kesalahan. Silakan coba lagi.';
-      });
+      setState(() => _errorMessage = 'Terjadi kesalahan. Silakan coba lagi.');
     } finally {
-      if (mounted) {
-        setState(() => _isLoading = false);
-      }
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
-  // ─── Handle Forgot Password ────────────────────────────────────────────────
   Future<void> _handleForgotPassword() async {
     final email = _emailCtrl.text.trim();
     if (email.isEmpty) {
       setState(() => _errorMessage = 'Masukkan email Anda terlebih dahulu.');
       return;
     }
-
     try {
       await _authService.sendPasswordResetEmail(email);
       if (mounted) {
@@ -94,58 +76,23 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F6FA),
+      backgroundColor: AppColors.authBg,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 60),
-              // BPS Logo
-              BPSLogoWidget(),
-
-              // ─── Header ────────────────────────────────────────────────────
-              // Center(
-              //   child: Container(
-              //     width: 72,
-              //     height: 72,
-              //     decoration: BoxDecoration(
-              //       gradient: const LinearGradient(
-              //         colors: [Color(0xFFF59E0B), Color(0xFFE65100)],
-              //         begin: Alignment.topLeft,
-              //         end: Alignment.bottomRight,
-              //       ),
-              //       borderRadius: BorderRadius.circular(20),
-              //       boxShadow: [
-              //         BoxShadow(
-              //           color: const Color(0xFFF59E0B).withOpacity(0.4),
-              //           blurRadius: 20,
-              //           offset: const Offset(0, 8),
-              //         ),
-              //       ],
-              //     ),
-              //     alignment: Alignment.center,
-              //     child: const Text(
-              //       'DC',
-              //       style: TextStyle(
-              //         color: Colors.white,
-              //         fontSize: 26,
-              //         fontWeight: FontWeight.w900,
-              //         letterSpacing: 0.5,
-              //       ),
-              //     ),
-              //   ),
-              // ),
+              const SizedBox(height: 60),
+              const BPSLogoWidget(),
               const SizedBox(height: 28),
-
               const Center(
                 child: Text(
                   'Selamat Datang!',
                   style: TextStyle(
                     fontSize: 26,
                     fontWeight: FontWeight.w800,
-                    color: Color(0xFF0A2A6B),
+                    color: AppColors.authNavy,
                   ),
                 ),
               ),
@@ -153,18 +100,14 @@ class _LoginScreenState extends State<LoginScreen> {
               const Center(
                 child: Text(
                   'Masuk untuk melanjutkan pembelajaran',
-                  style: TextStyle(fontSize: 14, color: Color(0xFF6B7A99)),
+                  style: TextStyle(fontSize: 14, color: AppColors.authNavyText),
                 ),
               ),
-
               const SizedBox(height: 40),
-
-              // ─── Form ──────────────────────────────────────────────────────
               Form(
                 key: _formKey,
                 child: Column(
                   children: [
-                    // Email
                     _buildTextField(
                       controller: _emailCtrl,
                       label: 'Email',
@@ -183,10 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         return null;
                       },
                     ),
-
                     const SizedBox(height: 16),
-
-                    // Password
                     _buildTextField(
                       controller: _passwordCtrl,
                       label: 'Password',
@@ -198,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           _obscurePassword
                               ? Icons.visibility_off_outlined
                               : Icons.visibility_outlined,
-                          color: const Color(0xFF6B7A99),
+                          color: AppColors.authNavyText,
                           size: 20,
                         ),
                         onPressed: () => setState(
@@ -215,78 +155,34 @@ class _LoginScreenState extends State<LoginScreen> {
                         return null;
                       },
                     ),
-
-                    // Lupa password
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
                         onPressed: _handleForgotPassword,
-                        style: TextButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 4,
-                            vertical: 8,
-                          ),
-                        ),
                         child: const Text(
                           'Lupa Password?',
                           style: TextStyle(
-                            color: Color(0xFFF59E0B),
+                            color: AppColors.authOrange,
                             fontWeight: FontWeight.w600,
                             fontSize: 13,
                           ),
                         ),
                       ),
                     ),
-
-                    // Error message
                     if (_errorMessage != null) ...[
                       const SizedBox(height: 4),
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 14,
-                          vertical: 12,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.red.shade50,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: Colors.red.shade200),
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.error_outline,
-                              color: Colors.red.shade600,
-                              size: 18,
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                _errorMessage!,
-                                style: TextStyle(
-                                  color: Colors.red.shade700,
-                                  fontSize: 13,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      _ErrorBanner(message: _errorMessage!),
                     ],
-
                     const SizedBox(height: 24),
-
-                    // Tombol Login (DIPERBAIKI)
                     SizedBox(
                       width: double.infinity,
                       height: 52,
                       child: ElevatedButton(
                         onPressed: _isLoading ? null : _handleLogin,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFF59E0B),
-                          disabledBackgroundColor: const Color(
-                            0xFFF59E0B,
-                          ).withOpacity(0.6),
+                          backgroundColor: AppColors.authOrange,
+                          disabledBackgroundColor: AppColors.authOrange
+                              .withValues(alpha: 0.6),
                           foregroundColor: Colors.white,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
@@ -314,10 +210,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
               ),
-
               const SizedBox(height: 32),
-
-              // ─── Divider ───────────────────────────────────────────────────
               Row(
                 children: [
                   Expanded(
@@ -338,10 +231,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
-
               const SizedBox(height: 24),
-
-              // ─── Link ke Register ──────────────────────────────────────────
               Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -354,18 +244,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const RegisterScreen(),
-                          ),
-                        );
-                      },
+                      onTap: () => context.pushPage(const RegisterScreen()),
                       child: const Text(
                         'Daftar Sekarang',
                         style: TextStyle(
-                          color: Color(0xFFF59E0B),
+                          color: AppColors.authOrange,
                           fontWeight: FontWeight.w700,
                           fontSize: 14,
                         ),
@@ -374,7 +257,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
               ),
-
               const SizedBox(height: 32),
             ],
           ),
@@ -383,7 +265,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // ─── Reusable TextField Builder ────────────────────────────────────────────
   Widget _buildTextField({
     required TextEditingController controller,
     required String label,
@@ -402,7 +283,7 @@ class _LoginScreenState extends State<LoginScreen> {
           style: const TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF0A2A6B),
+            color: AppColors.authNavy,
           ),
         ),
         const SizedBox(height: 8),
@@ -411,11 +292,11 @@ class _LoginScreenState extends State<LoginScreen> {
           keyboardType: keyboardType,
           obscureText: obscureText,
           validator: validator,
-          style: const TextStyle(fontSize: 14, color: Color(0xFF0A2A6B)),
+          style: const TextStyle(fontSize: 14, color: AppColors.authNavy),
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
-            prefixIcon: Icon(icon, color: const Color(0xFF6B7A99), size: 20),
+            prefixIcon: Icon(icon, color: AppColors.authNavyText, size: 20),
             suffixIcon: suffixIcon,
             filled: true,
             fillColor: Colors.white,
@@ -425,22 +306,22 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.grey.shade200, width: 1),
+              borderSide: BorderSide(color: Colors.grey.shade200),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.grey.shade200, width: 1),
+              borderSide: BorderSide(color: Colors.grey.shade200),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: const BorderSide(
-                color: Color(0xFFF59E0B),
+                color: AppColors.authOrange,
                 width: 1.5,
               ),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.red.shade400, width: 1),
+              borderSide: BorderSide(color: Colors.red.shade400),
             ),
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
@@ -449,6 +330,36 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _ErrorBanner extends StatelessWidget {
+  final String message;
+  const _ErrorBanner({required this.message});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      decoration: BoxDecoration(
+        color: Colors.red.shade50,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.red.shade200),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.error_outline, color: Colors.red.shade600, size: 18),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              message,
+              style: TextStyle(color: Colors.red.shade700, fontSize: 13),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

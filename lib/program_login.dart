@@ -237,7 +237,7 @@ class _ProgramLoginCombinedScreenState
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFFF59E0B).withOpacity(0.4),
+                      color: const Color(0xFFF59E0B).withValues(alpha: 0.4),
                       blurRadius: 20,
                       offset: const Offset(0, 8),
                     ),
@@ -305,7 +305,7 @@ class _ProgramLoginCombinedScreenState
                     backgroundColor: const Color(0xFFF59E0B),
                     disabledBackgroundColor: const Color(
                       0xFFF59E0B,
-                    ).withOpacity(0.5),
+                    ).withValues(alpha: 0.5),
                     foregroundColor: Colors.white,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
@@ -343,8 +343,8 @@ class _ProgramLoginCombinedScreenState
           boxShadow: [
             BoxShadow(
               color: isSelected
-                  ? const Color(0xFFF59E0B).withOpacity(0.2)
-                  : Colors.black.withOpacity(0.05),
+                  ? const Color(0xFFF59E0B).withValues(alpha: 0.2)
+                  : Colors.black.withValues(alpha: 0.05),
               blurRadius: isSelected ? 12 : 8,
               offset: const Offset(0, 4),
             ),
@@ -357,7 +357,7 @@ class _ProgramLoginCombinedScreenState
               height: 56,
               decoration: BoxDecoration(
                 color: isSelected
-                    ? const Color(0xFFF59E0B).withOpacity(0.1)
+                    ? const Color(0xFFF59E0B).withValues(alpha: 0.1)
                     : const Color(0xFFF4F6FA),
                 borderRadius: BorderRadius.circular(12),
               ),
@@ -446,7 +446,7 @@ class _ProgramLoginCombinedScreenState
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFFF59E0B).withOpacity(0.4),
+                        color: const Color(0xFFF59E0B).withValues(alpha: 0.4),
                         blurRadius: 20,
                         offset: const Offset(0, 8),
                       ),
@@ -488,7 +488,7 @@ class _ProgramLoginCombinedScreenState
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF59E0B).withOpacity(0.1),
+                      color: const Color(0xFFF59E0B).withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Row(
@@ -636,7 +636,7 @@ class _ProgramLoginCombinedScreenState
                           backgroundColor: const Color(0xFFF59E0B),
                           disabledBackgroundColor: const Color(
                             0xFFF59E0B,
-                          ).withOpacity(0.6),
+                          ).withValues(alpha: 0.6),
                           foregroundColor: Colors.white,
                           elevation: 0,
                           shape: RoundedRectangleBorder(

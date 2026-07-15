@@ -1,7 +1,7 @@
 // lib/screens/module_list_screen.dart
 import 'package:bps_e_learning/views/desa_cantik/kuis/kuis_data.dart';
 import 'package:bps_e_learning/views/desa_cantik/kuis/kuis_screen.dart';
-import 'package:bps_e_learning/views/desa_cantik/screen/learning_descan..dart';
+import 'package:bps_e_learning/views/desa_cantik/screen/learning_descan.dart';
 
 import 'package:flutter/material.dart';
 
@@ -67,12 +67,12 @@ class ModuleListScreen extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [cardColor, cardColor.withOpacity(0.8)],
+              colors: [cardColor, cardColor.withValues(alpha: 0.8)],
             ),
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: cardColor.withOpacity(0.4),
+                color: cardColor.withValues(alpha: 0.4),
                 blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
@@ -87,7 +87,7 @@ class ModuleListScreen extends StatelessWidget {
                   width: 56,
                   height: 56,
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.3),
+                    color: Colors.white.withValues(alpha: 0.3),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Center(
@@ -119,7 +119,7 @@ class ModuleListScreen extends StatelessWidget {
                       Text(
                         module.description,
                         style: TextStyle(
-                          color: Colors.white.withOpacity(0.9),
+                          color: Colors.white.withValues(alpha: 0.9),
                           fontSize: 12,
                         ),
                         maxLines: 2,
@@ -133,7 +133,7 @@ class ModuleListScreen extends StatelessWidget {
                           Text(
                             '${module.questions.length} soal',
                             style: TextStyle(
-                              color: Colors.white.withOpacity(0.8),
+                              color: Colors.white.withValues(alpha: 0.8),
                               fontSize: 11,
                             ),
                           ),
@@ -147,7 +147,7 @@ class ModuleListScreen extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Icon(

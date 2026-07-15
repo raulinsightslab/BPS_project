@@ -1,24 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:bps_e_learning/core/utils/app_colors.dart';
+import 'package:bps_e_learning/extensions/extension.dart';
 import 'package:bps_e_learning/views/login.dart';
-
-// ─── Colors ───────────────────────────────────────────────────────────────────
-class _C {
-  static const Color navy = Color(0xFF0A2A6B);
-  static const Color navyLight = Color(0xFF1565C0);
-  static const Color orange = Color(0xFFF29F05);
-  static const Color orangeDark = Color(0xFFE65100);
-  static const Color bg = Color(0xFFF0F4FA);
-  static const Color cardBorder = Color(0xFFD6E4F7);
-  static const Color textSecondary = Color(0xFF607D8B);
-}
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
-  // ==========================
-  // HEADER BUILDER
-  // ==========================
   Widget _buildHeader(BuildContext context) {
     final topPadding = MediaQuery.of(context).padding.top;
     return Container(
@@ -26,7 +14,7 @@ class SettingsPage extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(20, topPadding + 16, 20, 24),
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [_C.navy, _C.navyLight],
+          colors: [AppColors.pojokNavy, AppColors.pojokNavyLight],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -41,7 +29,7 @@ class SettingsPage extends StatelessWidget {
                 width: 42,
                 height: 42,
                 decoration: BoxDecoration(
-                  color: _C.orange,
+                  color: AppColors.pojokOrange,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 alignment: Alignment.center,
@@ -94,10 +82,7 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  // ==========================
-  // MENU ITEM
-  // ==========================
-  Widget buildMenuItem({
+  Widget _buildMenuItem({
     required BuildContext context,
     required Color bgColor,
     required IconData icon,
@@ -113,7 +98,7 @@ class SettingsPage extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: _C.cardBorder, width: 0.5),
+          border: Border.all(color: AppColors.pojokCardBorder, width: 0.5),
         ),
         child: Row(
           children: [
@@ -122,7 +107,7 @@ class SettingsPage extends StatelessWidget {
               decoration: BoxDecoration(
                 color: isDanger
                     ? Colors.red.shade100
-                    : bgColor.withOpacity(0.15),
+                    : bgColor.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
@@ -136,86 +121,74 @@ class SettingsPage extends StatelessWidget {
                 title,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
-                  color: isDanger ? Colors.red.shade700 : _C.navy,
+                  color: isDanger ? Colors.red.shade700 : AppColors.pojokNavy,
                 ),
               ),
             ),
-            Icon(Icons.chevron_right, color: _C.textSecondary),
+            Icon(Icons.chevron_right, color: AppColors.authNavyText),
           ],
         ),
       ),
     );
   }
 
-  // ==========================
-  // ABOUT DIALOG
-  // ==========================
-  void showAboutDialog(BuildContext context) {
+  void _showAboutDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (_) => const AlertDialog(
         content: Text(
-          "Pojok Statistik Kabupaten Tangerang merupakan program kolaborasi "
-          "antara Badan Pusat Statistik (BPS) dan pemerintah daerah untuk "
-          "meningkatkan literasi statistik masyarakat.\n\n"
-          "Program ini menyediakan akses data, edukasi statistik, serta "
-          "pendampingan dalam pemanfaatan data sebagai dasar perencanaan "
-          "dan pengambilan keputusan.",
+          'Pojok Statistik Kabupaten Tangerang merupakan program kolaborasi '
+          'antara Badan Pusat Statistik (BPS) dan pemerintah daerah untuk '
+          'meningkatkan literasi statistik masyarakat.\n\n'
+          'Program ini menyediakan akses data, edukasi statistik, serta '
+          'pendampingan dalam pemanfaatan data sebagai dasar perencanaan '
+          'dan pengambilan keputusan.',
         ),
       ),
     );
   }
 
-  // ==========================
-  // 🔥 LOGOUT DIALOG (FIX)
-  // ==========================
-  void showExitDialog(BuildContext context) {
+  /// FIX: gunakan mounted check setelah await untuk hindari crash
+  void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: const Text(
-          "Logout",
-          style: TextStyle(fontWeight: FontWeight.w700, color: _C.navy),
+          'Logout',
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            color: AppColors.pojokNavy,
+          ),
         ),
-        content: const Text(
-          "Apakah Anda yakin ingin keluar dari akun?",
-          style: TextStyle(color: _C.textSecondary),
-        ),
+        content: const Text('Apakah Anda yakin ingin keluar dari akun?'),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text("Batal"),
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: const Text('Batal'),
           ),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: _C.orange),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.pojokOrange,
+            ),
             onPressed: () async {
-              // 🔥 LOGOUT FIREBASE
+              Navigator.of(dialogContext).pop();
               await FirebaseAuth.instance.signOut();
-
-              Navigator.pop(dialogContext);
-
-              // 🔥 RESET KE LOGIN
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (_) => const LoginScreen()),
-                (route) => false,
-              );
+              // FIX: cek mounted sebelum pakai context setelah await
+              if (!context.mounted) return;
+              context.pushAndRemoveAllPages(const LoginScreen());
             },
-            child: const Text("Logout"),
+            child: const Text('Logout'),
           ),
         ],
       ),
     );
   }
 
-  // ==========================
-  // BUILD
-  // ==========================
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _C.bg,
+      backgroundColor: AppColors.pojokBg,
       body: Column(
         children: [
           _buildHeader(context),
@@ -223,20 +196,20 @@ class SettingsPage extends StatelessWidget {
             child: ListView(
               padding: const EdgeInsets.all(16),
               children: [
-                buildMenuItem(
+                _buildMenuItem(
                   context: context,
-                  bgColor: _C.navy,
+                  bgColor: AppColors.pojokNavy,
                   icon: Icons.info,
-                  title: "Tentang Program",
-                  onTap: () => showAboutDialog(context),
+                  title: 'Tentang Program',
+                  onTap: () => _showAboutDialog(context),
                 ),
-                buildMenuItem(
+                _buildMenuItem(
                   context: context,
                   bgColor: Colors.red,
                   icon: Icons.logout,
-                  title: "Logout",
+                  title: 'Logout',
                   isDanger: true,
-                  onTap: () => showExitDialog(context),
+                  onTap: () => _showLogoutDialog(context),
                 ),
               ],
             ),

@@ -1,24 +1,42 @@
 import 'package:bps_e_learning/core/utils/app_colors.dart';
-import 'package:bps_e_learning/views/pembinaan_sektoral/widget/pembinaan_botnav.dart';
-import 'package:flutter/material.dart';
 import 'package:bps_e_learning/core/widgets/custom_button.dart';
 import 'package:bps_e_learning/core/widgets/logo_widget.dart';
 import 'package:bps_e_learning/core/widgets/page_indicator.dart';
 import 'package:bps_e_learning/core/widgets/program_card.dart';
+import 'package:bps_e_learning/extensions/extension.dart';
 import 'package:bps_e_learning/views/desa_cantik/widget/botnav_descan.dart';
+import 'package:bps_e_learning/views/introduction/screens/password_screen.dart';
+import 'package:bps_e_learning/views/pembinaan_sektoral/widget/pembinaan_botnav.dart';
 import 'package:bps_e_learning/views/pojok_statistik/widget/pojok_botnav.dart';
+import 'package:flutter/material.dart';
 
-// ⬆ Pastikan nama file & class benar
+// ── Model ─────────────────────────────────────────────────────────────────────
+class Program {
+  final String title;
+  final String description;
+  final IconData icon;
+  final bool requiresPassword;
 
+  const Program({
+    required this.title,
+    required this.description,
+    required this.icon,
+    required this.requiresPassword,
+  });
+}
+
+// ── Screen ────────────────────────────────────────────────────────────────────
 class ProgramSelectionPage extends StatefulWidget {
+  const ProgramSelectionPage({super.key});
+
   @override
-  _ProgramSelectionPageState createState() => _ProgramSelectionPageState();
+  State<ProgramSelectionPage> createState() => _ProgramSelectionPageState();
 }
 
 class _ProgramSelectionPageState extends State<ProgramSelectionPage> {
   int? _selectedProgramIndex;
 
-  final List<Program> _programs = [
+  static const List<Program> _programs = [
     Program(
       title: 'Pojok Statistik',
       description: 'Pembelajaran umum dari BPS',
@@ -39,39 +57,18 @@ class _ProgramSelectionPageState extends State<ProgramSelectionPage> {
     ),
   ];
 
-  void _onProgramSelected(int index) {
-    setState(() {
-      _selectedProgramIndex = index;
-    });
-  }
-
-  /// ROUTING BARU (yang kamu minta)
   void _onContinuePressed() {
     if (_selectedProgramIndex == null) return;
+    final program = _programs[_selectedProgramIndex!];
 
-    final selectedProgram = _programs[_selectedProgramIndex!];
-
-    switch (selectedProgram.title) {
-      case 'Pojok Statistik':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => PojokMainScreen()),
-        );
-        break;
-
-      case 'Desa Cantik':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => BotnavDescan()),
-        );
-        break;
-
-      case 'Pembinaan Sektoral':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => PembinaanBotnav()),
-        );
-        break;
+    if (program.requiresPassword) {
+      context.pushPage(PasswordScreen(programTitle: program.title));
+    } else {
+      // Langsung masuk tanpa password
+      switch (program.title) {
+        case 'Pojok Statistik':
+          context.pushPage(const PojokMainScreen());
+      }
     }
   }
 
@@ -79,7 +76,7 @@ class _ProgramSelectionPageState extends State<ProgramSelectionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               AppColors.primary,
@@ -94,15 +91,15 @@ class _ProgramSelectionPageState extends State<ProgramSelectionPage> {
           padding: const EdgeInsets.all(24.0),
           child: Column(
             children: [
-              SizedBox(height: 60),
-              BPSLogoWidget(),
-              SizedBox(height: 40),
+              const SizedBox(height: 60),
+              const BPSLogoWidget(),
+              const SizedBox(height: 40),
               Text(
                 'Pilih Program Pembelajaran Anda',
                 style: Theme.of(context).textTheme.headlineMedium,
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               Expanded(
                 child: ListView.builder(
                   itemCount: _programs.length,
@@ -112,24 +109,23 @@ class _ProgramSelectionPageState extends State<ProgramSelectionPage> {
                       child: ProgramCard(
                         program: _programs[index],
                         isSelected: _selectedProgramIndex == index,
-                        onTap: () => _onProgramSelected(index),
+                        onTap: () =>
+                            setState(() => _selectedProgramIndex = index),
                       ),
                     );
                   },
                 ),
               ),
-              SizedBox(height: 24),
-
+              const SizedBox(height: 24),
               OnboardingButton(
                 text: 'Pilih Program Ini',
                 onPressed: _selectedProgramIndex != null
                     ? _onContinuePressed
                     : null,
               ),
-              SizedBox(height: 16),
-
-              PageIndicator(
-                currentPage: 3,
+              const SizedBox(height: 16),
+              const PageIndicator(
+                currentPage: 2,
                 totalPages: 3,
                 activeColor: Color(0xFFFFA726),
                 inactiveColor: Color(0xFFFFE0B2),
@@ -140,18 +136,4 @@ class _ProgramSelectionPageState extends State<ProgramSelectionPage> {
       ),
     );
   }
-}
-
-class Program {
-  final String title;
-  final String description;
-  final IconData icon;
-  final bool requiresPassword;
-
-  Program({
-    required this.title,
-    required this.description,
-    required this.icon,
-    required this.requiresPassword,
-  });
 }

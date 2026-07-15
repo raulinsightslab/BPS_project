@@ -1,6 +1,5 @@
 // lib/screens/score_screen.dart
 import 'package:bps_e_learning/views/desa_cantik/kuis/kuis_data.dart';
-import 'package:bps_e_learning/views/desa_cantik/kuis/kuis_list.dart';
 import 'package:bps_e_learning/views/desa_cantik/widget/botnav_descan.dart';
 import 'package:flutter/material.dart';
 
@@ -34,8 +33,8 @@ class ScoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
       child: Scaffold(
         body: Container(
           decoration: BoxDecoration(
@@ -57,7 +56,7 @@ class ScoreScreen extends StatelessWidget {
                       width: 100,
                       height: 100,
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
+                        color: Colors.white.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(50),
                       ),
                       child: Icon(
@@ -84,7 +83,7 @@ class ScoreScreen extends StatelessWidget {
                         vertical: 12,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
+                        color: Colors.white.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
@@ -105,7 +104,7 @@ class ScoreScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
+                            color: Colors.black.withValues(alpha: 0.2),
                             blurRadius: 20,
                             offset: const Offset(0, 10),
                           ),
@@ -137,10 +136,10 @@ class ScoreScreen extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
-                              color: _gradeColor.withOpacity(0.1),
+                              color: _gradeColor.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
-                                color: _gradeColor.withOpacity(0.3),
+                                color: _gradeColor.withValues(alpha: 0.3),
                               ),
                             ),
                             child: Column(
@@ -255,10 +254,10 @@ class ScoreScreen extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.15),
+                        color: Colors.white.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: Colors.white.withOpacity(0.3),
+                          color: Colors.white.withValues(alpha: 0.3),
                           width: 2,
                         ),
                       ),
@@ -285,7 +284,7 @@ class ScoreScreen extends StatelessWidget {
                             'Simpan bukti nilai Anda',
                             style: TextStyle(
                               fontSize: 12,
-                              color: Colors.white.withOpacity(0.9),
+                              color: Colors.white.withValues(alpha: 0.9),
                             ),
                           ),
                         ],
@@ -328,7 +327,7 @@ class ScoreScreen extends StatelessWidget {
                             icon: const Icon(Icons.refresh),
                             label: const Text('Ulangi'),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white.withOpacity(0.2),
+                              backgroundColor: Colors.white.withValues(alpha: 0.2),
                               foregroundColor: Colors.white,
                               padding: const EdgeInsets.symmetric(vertical: 12),
                               shape: RoundedRectangleBorder(

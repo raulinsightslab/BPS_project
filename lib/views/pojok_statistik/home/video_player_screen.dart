@@ -182,7 +182,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
               width: 38,
               height: 38,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.15),
+                color: Colors.white.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: const Icon(
@@ -234,7 +234,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         border: Border.all(color: _C.cardBorder, width: 0.5),
         boxShadow: [
           BoxShadow(
-            color: _C.navy.withOpacity(0.06),
+            color: _C.navy.withValues(alpha: 0.06),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -417,7 +417,7 @@ class _RelatedItem extends StatelessWidget {
           border: Border.all(color: _C.cardBorder, width: 0.5),
           boxShadow: [
             BoxShadow(
-              color: _C.navy.withOpacity(0.05),
+              color: _C.navy.withValues(alpha: 0.05),
               blurRadius: 8,
               offset: const Offset(0, 3),
             ),
@@ -460,7 +460,7 @@ class _RelatedItem extends StatelessWidget {
                       },
                     ),
                     // Overlay
-                    Container(color: _gradient[0].withOpacity(0.45)),
+                    Container(color: _gradient[0].withValues(alpha: 0.45)),
                     // Play icon
                     const Center(
                       child: Icon(
