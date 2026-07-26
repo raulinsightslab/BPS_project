@@ -1,36 +1,20 @@
+// lib/features/desa_cantik/dashboard/dashboard_desacan_screen.dart
+import 'package:bps_e_learning/core/utils/app_colors.dart';
+import 'package:bps_e_learning/views/desa_cantik/screen/vidplayer_descan.dart';
 import 'package:flutter/material.dart';
 import 'package:bps_e_learning/core/services/video_firestore_service.dart';
 import 'package:bps_e_learning/core/models/material_model.dart';
-import 'video_player_screen.dart';
 
-// ─── Colors ───────────────────────────────────────────────────────────────────
-class _C {
-  static const Color navy = Color(0xFF0A2A6B);
-  static const Color navyLight = Color(0xFF1565C0);
-  static const Color orange = Color(0xFFF29F05);
-  static const Color orangeDark = Color(0xFFE65100);
-  static const Color bg = Color(0xFFF0F4FA);
-  static const Color cardBorder = Color(0xFFD6E4F7);
-
-  // Thumb gradients per card index
-  static const List<List<Color>> thumbGradients = [
-    [Color(0xFF0D1B5E), Color(0xFF1A237E)],
-    [Color(0xFF1A237E), Color(0xFF283593)],
-    [Color(0xFF0A1540), Color(0xFF0D1B5E)],
-    [Color(0xFF162040), Color(0xFF1A237E)],
-  ];
-}
-
-// ─── DashboardScreen ──────────────────────────────────────────────────────────
-class DashboardScreen extends StatefulWidget {
+// ─── DashboardDesaCanScreen ──────────────────────────────────────────────────
+class DashboardDesaCanScreen extends StatefulWidget {
   final String program;
-  const DashboardScreen({super.key, required this.program});
+  const DashboardDesaCanScreen({super.key, required this.program});
 
   @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
+  State<DashboardDesaCanScreen> createState() => _DashboardDesaCanScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
+class _DashboardDesaCanScreenState extends State<DashboardDesaCanScreen> {
   final FirestoreService _firestoreService = FirestoreService();
   final ScrollController _scrollController = ScrollController();
 
@@ -49,7 +33,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     Navigator.push(
       context,
       PageRouteBuilder(
-        pageBuilder: (_, animation, __) => VideoPlayerScreen(
+        pageBuilder: (_, animation, __) => VideoPlayerDesaCanScreen(
           video: video,
           allVideos: allVideos,
           currentIndex: index,
@@ -74,17 +58,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _C.bg,
+      backgroundColor: ColorPs.bg,
       body: Column(
         children: [
-          _Header(program: widget.program),
+          _HeaderDesaCan(program: widget.program),
           Expanded(
             child: FutureBuilder<List<VideoItem>>(
               future: _firestoreService.getMaterials(widget.program),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
-                    child: CircularProgressIndicator(color: _C.orange),
+                    child: CircularProgressIndicator(
+                      color: ColorPs.desaPrimary,
+                    ),
                   );
                 }
 
@@ -104,7 +90,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
-                            color: _C.navy,
+                            color: ColorPs.desaTextPrimary,
                           ),
                         ),
                         const SizedBox(height: 4),
@@ -122,7 +108,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             setState(() {});
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: _C.orange,
+                            backgroundColor: ColorPs.desaPrimary,
                             foregroundColor: Colors.white,
                           ),
                           child: const Text('Coba Lagi'),
@@ -150,7 +136,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
-                            color: _C.navy,
+                            color: ColorPs.desaTextPrimary,
                           ),
                         ),
                         SizedBox(height: 4),
@@ -167,10 +153,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   controller: _scrollController,
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
                   children: [
-                    _SectionLabel(label: 'VIDEO MATERI'),
+                    _SectionLabelDesaCan(label: 'VIDEO MATERI'),
                     const SizedBox(height: 4),
                     ...videos.asMap().entries.map(
-                      (e) => _VideoCard(
+                      (e) => _VideoCardDesaCan(
                         video: e.value,
                         index: e.key,
                         onTap: () =>
@@ -188,20 +174,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 }
 
-// ─── Header ───────────────────────────────────────────────────────────────────
-class _Header extends StatelessWidget {
+// ─── Header Desa Cantik ──────────────────────────────────────────────────────
+class _HeaderDesaCan extends StatelessWidget {
   final String program;
 
-  const _Header({required this.program});
+  const _HeaderDesaCan({required this.program});
 
   String _getProgramDisplayName(String program) {
     switch (program) {
-      case 'pojok_statistik':
-        return 'Pojok Statistik';
       case 'desa_cantik':
         return 'Desa Cantik';
-      case 'statistik_sektoral':
-        return 'Statistik Sektoral';
       default:
         return program;
     }
@@ -215,7 +197,7 @@ class _Header extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(20, topPadding + 16, 20, 24),
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [_C.navy, _C.navyLight],
+          colors: [ColorPs.desaPrimary, ColorPs.desaPrimaryDark],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -231,14 +213,14 @@ class _Header extends StatelessWidget {
                 width: 42,
                 height: 42,
                 decoration: BoxDecoration(
-                  color: _C.orange,
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 alignment: Alignment.center,
                 child: const Text(
-                  'PS',
+                  'DC',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: ColorPs.desaPrimary,
                     fontSize: 14,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 0.5,
@@ -250,7 +232,7 @@ class _Header extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Pojok Statistik',
+                    'Desa Cantik',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 15,
@@ -264,7 +246,6 @@ class _Header extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              // Video count will be updated by FutureBuilder
             ],
           ),
           const SizedBox(height: 20),
@@ -291,14 +272,20 @@ class _Header extends StatelessWidget {
           // Stats row
           const Row(
             children: [
-              _StatChip(
+              _StatChipDesaCan(
                 icon: Icons.play_circle_outline_rounded,
                 label: 'Video',
               ),
               SizedBox(width: 10),
-              _StatChip(icon: Icons.access_time_rounded, label: 'Gratis'),
+              _StatChipDesaCan(
+                icon: Icons.access_time_rounded,
+                label: 'Gratis',
+              ),
               SizedBox(width: 10),
-              _StatChip(icon: Icons.verified_rounded, label: 'BPS Resmi'),
+              _StatChipDesaCan(
+                icon: Icons.verified_rounded,
+                label: 'BPS Resmi',
+              ),
             ],
           ),
         ],
@@ -307,10 +294,10 @@ class _Header extends StatelessWidget {
   }
 }
 
-class _StatChip extends StatelessWidget {
+class _StatChipDesaCan extends StatelessWidget {
   final IconData icon;
   final String label;
-  const _StatChip({required this.icon, required this.label});
+  const _StatChipDesaCan({required this.icon, required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -327,7 +314,7 @@ class _StatChip extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: _C.orange, size: 13),
+          Icon(icon, color: Colors.white, size: 13),
           const SizedBox(width: 5),
           Text(
             label,
@@ -344,9 +331,9 @@ class _StatChip extends StatelessWidget {
 }
 
 // ─── Section Label ────────────────────────────────────────────────────────────
-class _SectionLabel extends StatelessWidget {
+class _SectionLabelDesaCan extends StatelessWidget {
   final String label;
-  const _SectionLabel({required this.label});
+  const _SectionLabelDesaCan({required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -358,7 +345,7 @@ class _SectionLabel extends StatelessWidget {
             width: 3,
             height: 16,
             decoration: BoxDecoration(
-              color: _C.orange,
+              color: ColorPs.desaPrimary,
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -368,7 +355,7 @@ class _SectionLabel extends StatelessWidget {
             style: const TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w700,
-              color: _C.navy,
+              color: ColorPs.desaTextPrimary,
               letterSpacing: 1.2,
             ),
           ),
@@ -379,19 +366,19 @@ class _SectionLabel extends StatelessWidget {
 }
 
 // ─── Video Card ───────────────────────────────────────────────────────────────
-class _VideoCard extends StatelessWidget {
+class _VideoCardDesaCan extends StatelessWidget {
   final VideoItem video;
   final int index;
   final VoidCallback onTap;
 
-  const _VideoCard({
+  const _VideoCardDesaCan({
     required this.video,
     required this.index,
     required this.onTap,
   });
 
   List<Color> get _gradient =>
-      _C.thumbGradients[index % _C.thumbGradients.length];
+      ColorPs.thumbGradients[index % ColorPs.thumbGradients.length];
 
   @override
   Widget build(BuildContext context) {
@@ -402,10 +389,10 @@ class _VideoCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: _C.cardBorder, width: 0.5),
+          border: Border.all(color: ColorPs.desaDivider, width: 0.5),
           boxShadow: [
             BoxShadow(
-              color: _C.navy.withValues(alpha: 0.07),
+              color: ColorPs.desaTextPrimary.withValues(alpha: 0.07),
               blurRadius: 16,
               offset: const Offset(0, 4),
             ),
@@ -473,7 +460,7 @@ class _VideoCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
                 decoration: BoxDecoration(
-                  color: _C.orange,
+                  color: ColorPs.desaPrimary,
                   borderRadius: BorderRadius.circular(7),
                 ),
                 child: Text(
@@ -493,11 +480,11 @@ class _VideoCard extends StatelessWidget {
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: _C.orange.withValues(alpha: 0.92),
+                  color: ColorPs.desaPrimary.withValues(alpha: 0.92),
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: _C.orange.withValues(alpha: 0.45),
+                      color: ColorPs.desaPrimary.withValues(alpha: 0.45),
                       blurRadius: 16,
                       spreadRadius: 2,
                     ),
@@ -547,7 +534,7 @@ class _VideoCard extends StatelessWidget {
             style: const TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w700,
-              color: _C.navy,
+              color: ColorPs.desaTextPrimary,
               height: 1.4,
             ),
             maxLines: 2,
@@ -558,7 +545,7 @@ class _VideoCard extends StatelessWidget {
             video.description,
             style: const TextStyle(
               fontSize: 11.5,
-              color: Color(0xFF607D8B),
+              color: ColorPs.desaTextSecondary,
               height: 1.5,
             ),
             maxLines: 2,
@@ -575,7 +562,7 @@ class _VideoCard extends StatelessWidget {
                     height: 40,
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
-                        colors: [_C.orange, _C.orangeDark],
+                        colors: [ColorPs.desaPrimary, ColorPs.desaPrimaryDark],
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
                       ),

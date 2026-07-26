@@ -68,3 +68,75 @@ class AppColors {
     Color(0xFFC9ADA7),
   ];
 }
+
+class C {
+  static const Color navy = Color(0xFF0A2A6B);
+  static const Color navyLight = Color(0xFF1565C0);
+  static const Color orange = Color(0xFFF29F05);
+  static const Color orangeDark = Color(0xFFE65100);
+  static const Color bg = Color(0xFFF0F4FA);
+  static const Color cardBorder = Color(0xFFD6E4F7);
+
+  // Thumb gradients per card index
+  static const List<List<Color>> thumbGradients = [
+    [Color(0xFF0D1B5E), Color(0xFF1A237E)],
+    [Color(0xFF1A237E), Color(0xFF283593)],
+    [Color(0xFF0A1540), Color(0xFF0D1B5E)],
+    [Color(0xFF162040), Color(0xFF1A237E)],
+  ];
+}
+
+class ColorPs {
+  // Pojok Statistik Colors
+  static const Color navy = Color(0xFF0A2A6B);
+  static const Color navyLight = Color(0xFF1565C0);
+  static const Color orange = Color(0xFFF29F05);
+  static const Color orangeDark = Color(0xFFE65100);
+  static const Color bg = Color(0xFFF0F4FA);
+  static const Color cardBorder = Color(0xFFD6E4F7);
+
+  // Desa Cantik Colors
+  static const Color desaPrimary = Color(0xFFF59E0B);
+  static const Color desaPrimaryDark = Color(0xFFE65100);
+  static const Color desaPrimaryLight = Color(0xFFFFF3E8);
+  static const Color desaAccentBlue = Color(0xFF0A2A6B);
+  static const Color desaAccentGreen = Color(0xFF1B8A4A);
+  static const Color desaAccentGreenLight = Color(0xFFE8F5EE);
+  static const Color desaAccentBlueLight = Color(0xFFE8EEF8);
+  static const Color desaBg = Color(0xFFF4F6FA);
+  static const Color desaCardBg = Color(0xFFFFFFFF);
+  static const Color desaTextPrimary = Color(0xFF0A2A6B);
+  static const Color desaTextSecondary = Color(0xFF6B7A99);
+  static const Color desaDivider = Color(0xFFE8EDF5);
+
+  // Thumb gradients per card index
+  static const List<List<Color>> thumbGradients = [
+    [Color(0xFF0D1B5E), Color(0xFF1A237E)],
+    [Color(0xFF1A237E), Color(0xFF283593)],
+    [Color(0xFF0A1540), Color(0xFF0D1B5E)],
+    [Color(0xFF162040), Color(0xFF1A237E)],
+  ];
+}
+
+class QuizColors {
+  static const Color primary = Color(0xFF0A2A6B);
+  static const Color primaryLight = Color(0xFF1565C0);
+  static const Color orange = Color(0xFFF29F05);
+  static const Color orangeDark = Color(0xFFE65100);
+  static const Color bg = Color(0xFFF0F4FA);
+  static const Color cardBorder = Color(0xFFD6E4F7);
+  static const Color textPrimary = Color(0xFF0A2A6B);
+  static const Color textSecondary = Color(0xFF607D8B);
+  static const Color success = Color(0xFF1B8A4A);
+  static const Color error = Color(0xFFD32F2F);
+
+  static const Color desaPrimary = Color(0xFFF59E0B);
+  static const Color desaPrimaryDark = Color(0xFFE65100);
+  static const Color desaBg = Color(0xFFF4F6FA);
+  static const Color desaDivider = Color(0xFFE8EDF5);
+  static const Color desaTextPrimary = Color(0xFF0A2A6B);
+  static const Color desaTextSecondary = Color(0xFF6B7A99);
+  // Desa Cantik Colors
+}
+
+// lib/core/utils/quiz_colors.dart

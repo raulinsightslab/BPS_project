@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:bps_e_learning/core/utils/app_colors.dart';
 import 'package:bps_e_learning/views/desa_cantik/kuis/kuis_list.dart';
+import 'package:bps_e_learning/views/desa_cantik/quiz/quiz_module_screen.dart';
+import 'package:bps_e_learning/views/desa_cantik/screen/dashboard_descan.dart';
 import 'package:bps_e_learning/views/desa_cantik/screen/learning_descan.dart';
 import 'package:bps_e_learning/views/desa_cantik/screen/settings_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +19,8 @@ class _BotnavDescanState extends State<BotnavDescan> {
 
   // FIX: gunakan IndexedStack untuk lazy loading + preserve state
   static const _screens = [
-    DesaCantikLearningScreen(),
-    ModuleListScreen(),
+    DashboardDesaCanScreen(program: 'desa_cantik'),
+    QuizModuleScreen(program: 'desa_cantik'),
     SettingsPage(),
   ];
 

@@ -69,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // Latar putih
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -115,7 +115,7 @@ class _SplashScreenState extends State<SplashScreen>
                 child: Column(
                   children: [
                     Text(
-                      'BPS E-Learning',
+                      'Stat-Gem',
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,

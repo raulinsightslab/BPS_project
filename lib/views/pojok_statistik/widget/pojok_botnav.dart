@@ -14,9 +14,10 @@ class PojokMainScreen extends StatefulWidget {
 class _PojokMainScreenState extends State<PojokMainScreen> {
   int _currentIndex = 0;
 
-  // FIX: gunakan IndexedStack agar screen tidak di-rebuild setiap switch tab,
-  // tapi juga tidak semua di-instantiate sekaligus saat pertama load.
-  static const _screens = [DashboardScreen(), SettingsPage()];
+  static const _screens = [
+    DashboardScreen(program: 'pojok_statistik'),
+    SettingsPage(),
+  ];
 
   @override
   Widget build(BuildContext context) {

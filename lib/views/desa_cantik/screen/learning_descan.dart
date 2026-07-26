@@ -36,14 +36,11 @@ class DesaCantikSliverAppBar extends StatelessWidget {
     return SliverAppBar(
       automaticallyImplyLeading: false,
       expandedHeight: 160,
-      // FIX #2: pinned: true agar appbar tidak ikut scroll
       pinned: true,
-      // FIX #4: backgroundColor pakai bg color supaya lengkungan kelihatan
+
       backgroundColor: DesaCColors.bg,
       elevation: 0,
       flexibleSpace: FlexibleSpaceBar(
-        // FIX #3 & #4: Tidak pakai Spacer(), gunakan Column dengan mainAxisAlignment
-        // collapseMode none agar tidak ada parallax yang buat gap
         collapseMode: CollapseMode.pin,
         background: Container(
           // FIX #4: bg luar transparan sehingga lengkungan bawah kelihatan
@@ -66,7 +63,6 @@ class DesaCantikSliverAppBar extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Top Row: Logo + Title + Badge
                   Row(
                     children: [
                       Container(

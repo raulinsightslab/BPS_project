@@ -1,32 +1,16 @@
+// lib/features/desa_cantik/dashboard/video_player_desacan_screen.dart
+import 'package:bps_e_learning/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:bps_e_learning/core/models/material_model.dart';
 
-// ─── Colors (local copy so file is self-contained) ────────────────────────────
-class _C {
-  static const Color navy = Color(0xFF0A2A6B);
-  static const Color navyLight = Color(0xFF1565C0);
-  static const Color orange = Color(0xFFF29F05);
-  static const Color orangeDark = Color(0xFFE65100);
-  static const Color bg = Color(0xFFF0F4FA);
-  static const Color cardBorder = Color(0xFFD6E4F7);
-
-  static const List<List<Color>> thumbGradients = [
-    [Color(0xFF0D1B5E), Color(0xFF1A237E)],
-    [Color(0xFF1A237E), Color(0xFF283593)],
-    [Color(0xFF0A1540), Color(0xFF0D1B5E)],
-    [Color(0xFF162040), Color(0xFF1A237E)],
-  ];
-}
-
-// ─── VideoPlayerScreen ────────────────────────────────────────────────────────
-class VideoPlayerScreen extends StatefulWidget {
+// ─── VideoPlayerDesaCanScreen ────────────────────────────────────────────────
+class VideoPlayerDesaCanScreen extends StatefulWidget {
   final VideoItem video;
   final List<VideoItem> allVideos;
   final int currentIndex;
-
-  const VideoPlayerScreen({
+  const VideoPlayerDesaCanScreen({
     super.key,
     required this.video,
     required this.allVideos,
@@ -34,10 +18,11 @@ class VideoPlayerScreen extends StatefulWidget {
   });
 
   @override
-  State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
+  State<VideoPlayerDesaCanScreen> createState() =>
+      _VideoPlayerDesaCanScreenState();
 }
 
-class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
+class _VideoPlayerDesaCanScreenState extends State<VideoPlayerDesaCanScreen> {
   late YoutubePlayerController _controller;
   late VideoItem _currentVideo;
   late int _currentIndex;
@@ -122,10 +107,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       player: YoutubePlayer(
         controller: _controller,
         showVideoProgressIndicator: true,
-        progressIndicatorColor: _C.orange,
+        progressIndicatorColor: ColorPs.desaPrimary,
         progressColors: const ProgressBarColors(
-          playedColor: _C.orange,
-          handleColor: _C.orange,
+          playedColor: ColorPs.desaPrimary,
+          handleColor: ColorPs.desaPrimary,
           bufferedColor: Color(0xFFBBDEFB),
           backgroundColor: Color(0xFFE3F0FF),
         ),
@@ -133,7 +118,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       ),
       builder: (context, player) {
         return Scaffold(
-          backgroundColor: _C.bg,
+          backgroundColor: ColorPs.desaBg,
           body: Column(
             children: [
               // App bar (hide in fullscreen)
@@ -166,7 +151,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   // ── App Bar ────────────────────────────────────────────────────────────────
   Widget _buildAppBar(BuildContext context) {
     return Container(
-      color: _C.navy,
+      color: ColorPs.desaPrimary,
       padding: EdgeInsets.fromLTRB(
         12,
         MediaQuery.of(context).padding.top + 10,
@@ -231,10 +216,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: _C.cardBorder, width: 0.5),
+        border: Border.all(color: ColorPs.desaDivider, width: 0.5),
         boxShadow: [
           BoxShadow(
-            color: _C.navy.withValues(alpha: 0.06),
+            color: ColorPs.desaTextPrimary.withValues(alpha: 0.06),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -250,7 +235,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
                 decoration: BoxDecoration(
-                  color: _C.orange,
+                  color: ColorPs.desaPrimary,
                   borderRadius: BorderRadius.circular(7),
                 ),
                 child: Text(
@@ -269,7 +254,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
-                    color: _C.navy,
+                    color: ColorPs.desaTextPrimary,
                     height: 1.4,
                   ),
                 ),
@@ -278,14 +263,14 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           ),
           const SizedBox(height: 10),
           // Divider
-          Container(height: 0.5, color: _C.cardBorder),
+          Container(height: 0.5, color: ColorPs.desaDivider),
           const SizedBox(height: 10),
           // Description
           Text(
             _currentVideo.description,
             style: const TextStyle(
               fontSize: 12.5,
-              color: Color(0xFF607D8B),
+              color: ColorPs.desaTextSecondary,
               height: 1.6,
             ),
           ),
@@ -293,9 +278,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           // Tag row
           Row(
             children: [
-              _Tag(label: 'BPS', isPrimary: true),
+              _TagDesaCan(label: 'BPS', isPrimary: true),
               const SizedBox(width: 6),
-              _Tag(label: 'Statistik', isPrimary: false),
+              _TagDesaCan(label: 'Desa Cantik', isPrimary: false),
               const Spacer(),
               // Video number indicator
               Text(
@@ -323,7 +308,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             width: 3,
             height: 16,
             decoration: BoxDecoration(
-              color: _C.orange,
+              color: ColorPs.desaPrimary,
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -333,7 +318,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w700,
-              color: _C.navy,
+              color: ColorPs.desaTextPrimary,
               letterSpacing: 1.2,
             ),
           ),
@@ -347,7 +332,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     final related = _relatedVideos;
     return Column(
       children: related.map((entry) {
-        return _RelatedItem(
+        return _RelatedItemDesaCan(
           video: entry.value,
           index: entry.key,
           isCurrentlyPlaying: false,
@@ -359,10 +344,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 }
 
 // ─── Tag Chip ────────────────────────────────────────────────────────────────
-class _Tag extends StatelessWidget {
+class _TagDesaCan extends StatelessWidget {
   final String label;
   final bool isPrimary;
-  const _Tag({required this.label, required this.isPrimary});
+  const _TagDesaCan({required this.label, required this.isPrimary});
 
   @override
   Widget build(BuildContext context) {
@@ -377,7 +362,7 @@ class _Tag extends StatelessWidget {
         style: TextStyle(
           fontSize: 10,
           fontWeight: FontWeight.w700,
-          color: isPrimary ? _C.navyLight : _C.orangeDark,
+          color: isPrimary ? ColorPs.desaAccentBlue : ColorPs.desaPrimaryDark,
         ),
       ),
     );
@@ -385,13 +370,13 @@ class _Tag extends StatelessWidget {
 }
 
 // ─── Related Video Item ───────────────────────────────────────────────────────
-class _RelatedItem extends StatelessWidget {
+class _RelatedItemDesaCan extends StatelessWidget {
   final VideoItem video;
   final int index;
   final bool isCurrentlyPlaying;
   final VoidCallback onTap;
 
-  const _RelatedItem({
+  const _RelatedItemDesaCan({
     required this.video,
     required this.index,
     required this.isCurrentlyPlaying,
@@ -399,7 +384,7 @@ class _RelatedItem extends StatelessWidget {
   });
 
   List<Color> get _gradient =>
-      _C.thumbGradients[index % _C.thumbGradients.length];
+      ColorPs.thumbGradients[index % ColorPs.thumbGradients.length];
 
   @override
   Widget build(BuildContext context) {
@@ -411,10 +396,10 @@ class _RelatedItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: _C.cardBorder, width: 0.5),
+          border: Border.all(color: ColorPs.desaDivider, width: 0.5),
           boxShadow: [
             BoxShadow(
-              color: _C.navy.withValues(alpha: 0.05),
+              color: ColorPs.desaTextPrimary.withValues(alpha: 0.05),
               blurRadius: 8,
               offset: const Offset(0, 3),
             ),
@@ -476,7 +461,7 @@ class _RelatedItem extends StatelessWidget {
                           vertical: 1,
                         ),
                         decoration: BoxDecoration(
-                          color: _C.orange,
+                          color: ColorPs.desaPrimary,
                           borderRadius: BorderRadius.circular(3),
                         ),
                         child: Text(
@@ -504,7 +489,7 @@ class _RelatedItem extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: _C.navy,
+                      color: ColorPs.desaTextPrimary,
                       height: 1.3,
                     ),
                     maxLines: 2,
@@ -512,7 +497,7 @@ class _RelatedItem extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   const Text(
-                    'Pojok Statistik · BPS',
+                    'Desa Cantik · BPS',
                     style: TextStyle(fontSize: 10, color: Color(0xFF90A4AE)),
                   ),
                 ],
@@ -528,7 +513,7 @@ class _RelatedItem extends StatelessWidget {
               ),
               child: const Icon(
                 Icons.chevron_right_rounded,
-                color: _C.navy,
+                color: ColorPs.desaTextPrimary,
                 size: 18,
               ),
             ),
