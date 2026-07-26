@@ -148,7 +148,6 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  /// FIX: gunakan mounted check setelah await untuk hindari crash
   void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -174,11 +173,43 @@ class SettingsPage extends StatelessWidget {
             onPressed: () async {
               Navigator.of(dialogContext).pop();
               await FirebaseAuth.instance.signOut();
-              // FIX: cek mounted sebelum pakai context setelah await
               if (!context.mounted) return;
               context.pushAndRemoveAllPages(const LoginScreen());
             },
             child: const Text('Logout'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showExitProgramDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text(
+          'Keluar Program',
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            color: AppColors.pojokNavy,
+          ),
+        ),
+        content: const Text('Apakah Anda yakin ingin keluar dari program ini?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: const Text('Batal'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red.shade600,
+            ),
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              Navigator.of(context).pop();
+            },
+            child: const Text('Keluar', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -206,8 +237,16 @@ class SettingsPage extends StatelessWidget {
                 _buildMenuItem(
                   context: context,
                   bgColor: Colors.red,
+                  icon: Icons.exit_to_app,
+                  title: 'Keluar Program',
+                  isDanger: true,
+                  onTap: () => _showExitProgramDialog(context),
+                ),
+                _buildMenuItem(
+                  context: context,
+                  bgColor: Colors.red,
                   icon: Icons.logout,
-                  title: 'Logout',
+                  title: 'Logout Akun',
                   isDanger: true,
                   onTap: () => _showLogoutDialog(context),
                 ),

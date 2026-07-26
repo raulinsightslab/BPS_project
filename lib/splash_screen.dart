@@ -21,7 +21,6 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
     _initAnimations();
-    _navigateToNext();
   }
 
   void _initAnimations() {
@@ -50,14 +49,6 @@ class _SplashScreenState extends State<SplashScreen>
         );
 
     _animationController.forward();
-  }
-
-  Future<void> _navigateToNext() async {
-    // Tunggu minimal 2.5 detik atau sampai animasi selesai
-    await Future.delayed(const Duration(milliseconds: 2500));
-    if (mounted) {
-      Navigator.pushReplacementNamed(context, '/home');
-    }
   }
 
   @override

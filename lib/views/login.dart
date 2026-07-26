@@ -2,7 +2,6 @@ import 'package:bps_e_learning/core/utils/app_colors.dart';
 import 'package:bps_e_learning/core/widgets/logo_widget.dart';
 import 'package:bps_e_learning/extensions/extension.dart';
 import 'package:bps_e_learning/views/auth_service.dart';
-import 'package:bps_e_learning/views/introduction/screens/program_selection_screen.dart';
 import 'package:bps_e_learning/views/register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +41,10 @@ class _LoginScreenState extends State<LoginScreen> {
         email: _emailCtrl.text,
         password: _passwordCtrl.text,
       );
-      if (mounted) context.pushReplacePage(const ProgramSelectionPage());
+      // Perbaikan: Navigasi ke /home agar mengikuti alur yang sudah ada
+      if (mounted) {
+        Navigator.of(context).pushReplacementNamed('/home');
+      }
     } on FirebaseAuthException catch (e) {
       setState(() => _errorMessage = AuthService.getErrorMessage(e.code));
     } catch (_) {

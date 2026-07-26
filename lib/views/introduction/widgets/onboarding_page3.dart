@@ -4,7 +4,6 @@ import 'package:bps_e_learning/core/widgets/custom_button.dart';
 import 'package:bps_e_learning/core/widgets/glass_animate.dart';
 import 'package:bps_e_learning/core/widgets/logo_widget.dart';
 import 'package:bps_e_learning/core/widgets/page_indicator.dart';
-import 'package:bps_e_learning/views/login.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -31,7 +30,7 @@ class OnboardingPage3 extends StatelessWidget {
           children: [
             const SizedBox(height: 60),
             // BPS Logo
-            BPSLogoWidget(),
+            const BPSLogoWidget(),
             const SizedBox(height: 40),
             // Illustration with Glass Effect
             Expanded(
@@ -61,23 +60,9 @@ class OnboardingPage3 extends StatelessWidget {
                 await prefs.setBool('hasSeenOnboarding', true);
 
                 if (!context.mounted) return;
-                Navigator.of(context).pushReplacement(
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) =>
-                        const LoginScreen(),
-                    transitionsBuilder:
-                        (context, animation, secondaryAnimation, child) {
-                          final tween = Tween(
-                            begin: const Offset(1.0, 0.0),
-                            end: Offset.zero,
-                          ).chain(CurveTween(curve: Curves.easeInOut));
-                          return SlideTransition(
-                            position: animation.drive(tween),
-                            child: child,
-                          );
-                        },
-                  ),
-                );
+
+                // Navigasi ke HomeWrapper yang akan menangani login
+                Navigator.of(context).pushReplacementNamed('/home');
               },
             ),
             const SizedBox(height: 24),

@@ -93,25 +93,39 @@ class _AuthWrapperState extends State<AuthWrapper> {
   }
 
   Future<void> _checkInitialStatus() async {
-    final prefs = await SharedPreferences.getInstance();
-    final hasSeenOnboarding = prefs.getBool('hasSeenOnboarding') ?? false;
-    if (!mounted) return;
-    setState(() {
-      _hasSeenOnboarding = hasSeenOnboarding;
-      _isLoading = false;
-    });
+    // Tunggu minimal 2.5 detik agar Splash Screen terlihat
+    await Future.delayed(const Duration(milliseconds: 2500));
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final hasSeenOnboarding = prefs.getBool('hasSeenOnboarding') ?? false;
+      if (!mounted) return;
+      setState(() {
+        _hasSeenOnboarding = hasSeenOnboarding;
+        _isLoading = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _hasSeenOnboarding = false;
+        _isLoading = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    // Selalu tampilkan Splash Screen terlebih dahulu
     if (_isLoading) {
       return const SplashScreen();
     }
 
+    // Setelah loading selesai, cek status onboarding
     if (!_hasSeenOnboarding) {
       return const OnboardingScreen();
     }
 
+    // Jika sudah pernah onboarding, langsung ke HomeWrapper
     return const HomeWrapper();
   }
 }

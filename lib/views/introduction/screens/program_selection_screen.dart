@@ -5,7 +5,7 @@ import 'package:bps_e_learning/core/widgets/page_indicator.dart';
 import 'package:bps_e_learning/core/widgets/program_card.dart';
 import 'package:bps_e_learning/extensions/extension.dart';
 import 'package:bps_e_learning/views/desa_cantik/widget/botnav_descan.dart';
-import 'package:bps_e_learning/views/introduction/screens/password_screen.dart';
+import 'package:bps_e_learning/views/pembinaan_sektoral/screen/coming_soon.dart';
 import 'package:bps_e_learning/views/pembinaan_sektoral/widget/pembinaan_botnav.dart';
 import 'package:bps_e_learning/views/pojok_statistik/widget/pojok_botnav.dart';
 import 'package:flutter/material.dart';
@@ -39,21 +39,21 @@ class _ProgramSelectionPageState extends State<ProgramSelectionPage> {
   static const List<Program> _programs = [
     Program(
       title: 'Pojok Statistik',
-      description: 'Pembelajaran umum dari BPS',
+      description: 'Belajar statistik kelautan BPS',
       icon: Icons.analytics_outlined,
       requiresPassword: false,
     ),
     Program(
       title: 'Desa Cantik',
-      description: 'Masukkan password untuk mengakses program ini.',
+      description: 'Statistik untuk kemajuan desa.',
       icon: Icons.landscape_outlined,
-      requiresPassword: true,
+      requiresPassword: false, // Diubah dari true ke false
     ),
     Program(
       title: 'Pembinaan Sektoral',
-      description: 'Masukkan password untuk mengakses program ini.',
+      description: 'Program khusus instansi, akan segera hadir!',
       icon: Icons.business_center_outlined,
-      requiresPassword: true,
+      requiresPassword: false, // Diubah dari true ke false
     ),
   ];
 
@@ -62,12 +62,20 @@ class _ProgramSelectionPageState extends State<ProgramSelectionPage> {
     final program = _programs[_selectedProgramIndex!];
 
     if (program.requiresPassword) {
-      context.pushPage(PasswordScreen(programTitle: program.title));
+      // Ini tidak akan terpanggil karena semua program sudah requiresPassword = false
+      // Tapi tetap dipertahankan untuk struktur
     } else {
       // Langsung masuk tanpa password
       switch (program.title) {
         case 'Pojok Statistik':
           context.pushPage(const PojokMainScreen());
+          break;
+        case 'Desa Cantik':
+          context.pushPage(const BotnavDescan());
+          break;
+        case 'Pembinaan Sektoral':
+          context.pushPage(const DashboardPembinaanScreen());
+          break;
       }
     }
   }

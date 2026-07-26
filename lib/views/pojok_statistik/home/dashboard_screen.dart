@@ -71,6 +71,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  Future<List<VideoItem>> _fetchVideos() async {
+    return await _firestoreService.getMaterials(widget.program);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,107 +83,111 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           _Header(program: widget.program),
           Expanded(
-            child: FutureBuilder<List<VideoItem>>(
-              future: _firestoreService.getMaterials(widget.program),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(color: _C.orange),
-                  );
-                }
+            child: RefreshIndicator(
+              onRefresh: _fetchVideos,
+              color: _C.orange,
+              child: FutureBuilder<List<VideoItem>>(
+                future: _fetchVideos(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(color: _C.orange),
+                    );
+                  }
 
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.error_outline_rounded,
-                          color: Colors.red.shade300,
-                          size: 48,
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          'Gagal memuat video',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: _C.navy,
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.error_outline_rounded,
+                            color: Colors.red.shade300,
+                            size: 48,
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          snapshot.error?.toString() ?? 'Terjadi kesalahan',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
+                          const SizedBox(height: 12),
+                          Text(
+                            'Gagal memuat video',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: _C.navy,
+                            ),
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 16),
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {});
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: _C.orange,
-                            foregroundColor: Colors.white,
+                          const SizedBox(height: 4),
+                          Text(
+                            snapshot.error?.toString() ?? 'Terjadi kesalahan',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          child: const Text('Coba Lagi'),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-
-                final videos = snapshot.data ?? [];
-
-                if (videos.isEmpty) {
-                  return const Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.video_library_rounded,
-                          color: Color(0xFFB0BEC5),
-                          size: 48,
-                        ),
-                        SizedBox(height: 12),
-                        Text(
-                          'Belum ada video tersedia',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: _C.navy,
+                          const SizedBox(height: 16),
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {});
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: _C.orange,
+                              foregroundColor: Colors.white,
+                            ),
+                            child: const Text('Coba Lagi'),
                           ),
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          'Program ini belum memiliki materi video',
-                          style: TextStyle(fontSize: 12, color: Colors.grey),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-
-                return ListView(
-                  controller: _scrollController,
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-                  children: [
-                    _SectionLabel(label: 'VIDEO MATERI'),
-                    const SizedBox(height: 4),
-                    ...videos.asMap().entries.map(
-                      (e) => _VideoCard(
-                        video: e.value,
-                        index: e.key,
-                        onTap: () =>
-                            _openPlayer(context, e.value, videos, e.key),
+                        ],
                       ),
-                    ),
-                  ],
-                );
-              },
+                    );
+                  }
+
+                  final videos = snapshot.data ?? [];
+
+                  if (videos.isEmpty) {
+                    return const Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.video_library_rounded,
+                            color: Color(0xFFB0BEC5),
+                            size: 48,
+                          ),
+                          SizedBox(height: 12),
+                          Text(
+                            'Belum ada video tersedia',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: _C.navy,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            'Program ini belum memiliki materi video',
+                            style: TextStyle(fontSize: 12, color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+
+                  return ListView(
+                    controller: _scrollController,
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
+                    children: [
+                      _SectionLabel(label: 'VIDEO MATERI'),
+                      const SizedBox(height: 4),
+                      ...videos.asMap().entries.map(
+                        (e) => _VideoCard(
+                          video: e.value,
+                          index: e.key,
+                          onTap: () =>
+                              _openPlayer(context, e.value, videos, e.key),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
           ),
         ],

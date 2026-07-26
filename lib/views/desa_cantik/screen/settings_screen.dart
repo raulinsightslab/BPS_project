@@ -1,5 +1,8 @@
-import 'package:bps_e_learning/views/desa_cantik/screen/learning_descan.dart';
+import 'package:bps_e_learning/extensions/extension.dart';
+import 'package:bps_e_learning/views/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:bps_e_learning/views/desa_cantik/screen/learning_descan.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -127,17 +130,49 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text(
+          'Logout Akun',
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            color: DesaCColors.primary,
+          ),
+        ),
+        content: const Text('Apakah Anda yakin ingin keluar dari akun?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: const Text('Batal'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: DesaCColors.primary,
+            ),
+            onPressed: () async {
+              Navigator.of(dialogContext).pop();
+              await FirebaseAuth.instance.signOut();
+              if (!context.mounted) return;
+              context.pushAndRemoveAllPages(const LoginScreen());
+            },
+            child: const Text('Logout'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    // FIX #1: Ambil bottom padding untuk hindari konten tertutup navbar
     final bottomPadding = MediaQuery.of(context).padding.bottom;
 
     return Scaffold(
-      // FIX #4: backgroundColor bg color supaya lengkungan header kelihatan
       backgroundColor: DesaCColors.bg,
       body: CustomScrollView(
         slivers: [
-          // FIX #7: Pakai shared header widget yang sama dengan screen lain
           const DesaCantikSliverAppBar(
             title: 'Pengaturan',
             subtitle: 'Kelola preferensi aplikasi Anda',
@@ -145,7 +180,6 @@ class SettingsPage extends StatelessWidget {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              // FIX #3: Kurangi top padding agar tidak ada gap besar
               padding: EdgeInsets.fromLTRB(20, 16, 20, 32 + bottomPadding + 60),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,6 +201,16 @@ class SettingsPage extends StatelessWidget {
                     title: "Keluar Program",
                     isDanger: true,
                     onTap: () => showExitConfirmation(context),
+                  ),
+
+                  // Logout Akun
+                  buildMenuItem(
+                    context: context,
+                    bgColor: Colors.red.shade400,
+                    icon: Icons.logout,
+                    title: "Logout Akun",
+                    isDanger: true,
+                    onTap: () => _showLogoutDialog(context),
                   ),
 
                   const SizedBox(height: 40),
