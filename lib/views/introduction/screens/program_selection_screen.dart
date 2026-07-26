@@ -5,8 +5,7 @@ import 'package:bps_e_learning/core/widgets/page_indicator.dart';
 import 'package:bps_e_learning/core/widgets/program_card.dart';
 import 'package:bps_e_learning/extensions/extension.dart';
 import 'package:bps_e_learning/views/desa_cantik/widget/botnav_descan.dart';
-import 'package:bps_e_learning/views/pembinaan_sektoral/screen/coming_soon.dart';
-import 'package:bps_e_learning/views/pembinaan_sektoral/widget/pembinaan_botnav.dart';
+import 'package:bps_e_learning/views/pembinaan_sektoral/coming_soon.dart';
 import 'package:bps_e_learning/views/pojok_statistik/widget/pojok_botnav.dart';
 import 'package:flutter/material.dart';
 
